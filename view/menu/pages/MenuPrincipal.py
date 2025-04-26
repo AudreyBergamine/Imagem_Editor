@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from view.menu.components.image_comparator import ImageComparator
 from view.menu.components.menu_principal.side_menu import Side_menu
+from view.menu.components.menu_principal.tools_bar import ToolsBar
 
 
 class MenuPrincipal(tk.Frame):
@@ -21,15 +22,9 @@ class MenuPrincipal(tk.Frame):
         side_menu = Side_menu(self)
         side_menu.pack(side="left", fill="y")
         
-        label = ttk.Label(self, text="Menu principal", font=("Arial", 18))
-        label.pack(pady=20)
-        
-        btn_editor = tk.Button(self, text="Abrir Editor", command=lambda: self.mudar_tela("Editor"))
-        btn_editor.pack()
-        
-        btn_sair = tk.Button(self, text="Sair", command=self.quit)
-        btn_sair.pack()
+        toolsBar = ToolsBar(self, [])
+        toolsBar.pack()
         
         image_comparator = ImageComparator(self)
-        image_comparator.pack(pady=20)
+        image_comparator.pack(pady=0)
     

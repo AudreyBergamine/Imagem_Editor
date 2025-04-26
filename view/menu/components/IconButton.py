@@ -19,4 +19,6 @@ class IconButton(tk.Button):
         
         super().__init__(master, image=self.image, command=self.command, borderwidth=0, text=text, compound="top")
         
-        self.config(compound="left", padx=5, pady=5, relief="flat", bg=self.background_color, foreground=self.text_color, font=("Arial", 10))
+        self.config(compound="left", padx=5, pady=5, bg=self.background_color, foreground=self.text_color, font=("Arial", 10))
+        
+        # TODO: Fazer função que verifique se os caracteres do texto ultrapassam o limite do master
