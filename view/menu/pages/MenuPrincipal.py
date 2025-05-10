@@ -23,8 +23,8 @@ class MenuPrincipal(tk.Frame):
         side_menu.pack(side="left", fill="y")
         
         toolsBar = ToolsBar(self, [])
-        toolsBar.pack()
+        toolsBar.pack() 
         
         image_comparator = ImageComparator(self)
-        image_comparator.pack(pady=0)
+        image_comparator.pack(fill="both", expand=True)
     

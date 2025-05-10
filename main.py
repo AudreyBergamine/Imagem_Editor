@@ -4,6 +4,7 @@ from view.menu.pages.Editor import Editor
 from view.menu.components.menuBar import MenuBar
 from service.image_memory import ImageMemory
 from view.menu.components.main_container import main_container
+from configuration.configuration import Configuration
 
 class App(tk.Tk):
     def __init__(self):
@@ -12,8 +13,8 @@ class App(tk.Tk):
         self.memory = ImageMemory()
                 
         self.title("Imagem Editor")
-        largura_tela = self.winfo_screenwidth()
-        altura_tela = self.winfo_screenheight()
+        largura_tela = Configuration.window_width
+        altura_tela = Configuration.window_height
         self.geometry(f"{largura_tela}x{altura_tela}+0+0")
         
         self.container = main_container(self, self.trocar_tela)
