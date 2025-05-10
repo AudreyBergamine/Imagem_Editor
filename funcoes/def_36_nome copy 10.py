@@ -6,7 +6,7 @@ from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 # Eu já tenho a função para selecionar e abrir imagem 
 # em outro arquivo e já importei, 
 # agora quero desenvolver a def 
-# "    " 
+# "  " 
 # com base no exemplo que eu fiz
 # # e o exemplo da minha professora
 
