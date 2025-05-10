@@ -1,7 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
-
-
 
 # Eu já tenho a função para selecionar e abrir imagem 
 # em outro arquivo e já importei, 
@@ -18,8 +15,4 @@ from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
     
 #     return imagem_hsv
 
-
-
 # Exemplo da Professora:
-    
-  
