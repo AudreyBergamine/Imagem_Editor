@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
+from funcoes.def_0_abrir_imagem import abrir_imagem, selecionar_imagem
 
-class MenuBar(tk.Menu):
+class MenuBar(tk.Menu):     
     def __init__(self, parent):
         super().__init__(parent)
 
         # Menu "Arquivo"
         menu_arquivo = tk.Menu(self, tearoff=0)
         menu_arquivo.add_command(label="Novo", command=self.novo_arquivo)
-        menu_arquivo.add_command(label="Abrir", command=self.abrir_arquivo)
+        menu_arquivo.add_command(label="Carregar Imagem", command=self.abrir_arquivo)
         menu_arquivo.add_separator()
         menu_arquivo.add_command(label="Sair", command=parent.quit)
 
@@ -29,7 +30,11 @@ class MenuBar(tk.Menu):
         messagebox.showinfo("Novo", "Criando um novo arquivo...")
 
     def abrir_arquivo(self):
-        messagebox.showinfo("Abrir", "Abrindo um arquivo...")
+        imagem = selecionar_imagem()
+        if imagem is not None:
+            abrir_imagem(imagem)
+        else:
+            messagebox.showinfo("Abrir", "Erro")
 
     def configuracoes(self):
         messagebox.showinfo("Configurações", "Abrindo configurações...")

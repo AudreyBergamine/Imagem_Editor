@@ -2,7 +2,7 @@ import tkinter as tk
 
 from configuration.configuration import Configuration
 from view.menu.components.RoundedFrame import RoundedFrame
-
+ 
 class ImageComparator(RoundedFrame):
     def __init__(self, master, img_before=None, img_after=None):
         super().__init__(master, 
