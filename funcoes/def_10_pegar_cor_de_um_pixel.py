@@ -1,5 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 
 def pegar_cor_de_um_pixel(imagem, x, y):
     """

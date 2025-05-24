@@ -1,6 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
-
 
 def negativo_da_imagem(imagem):
     # Obtém as dimensões da imagem

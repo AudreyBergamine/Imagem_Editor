@@ -1,5 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagems
 
 def regiao_de_interesse(imagem):
     

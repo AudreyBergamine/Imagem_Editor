@@ -1,5 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 
 def ajuste_de_contraste(imagem, k):
     # Obter as dimensões da imagem

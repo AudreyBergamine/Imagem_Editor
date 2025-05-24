@@ -1,6 +1,5 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
-from def_10_pegar_cor_de_um_pixel import pegar_cor_de_um_pixel
+from .def_10_pegar_cor_de_um_pixel import pegar_cor_de_um_pixel
 
 def modificar_cor_de_um_pixel(imagem, coordenadas, nova_cor, verbose=False):
     """

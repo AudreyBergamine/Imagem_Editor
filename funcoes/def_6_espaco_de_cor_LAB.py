@@ -1,7 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
-
-
 
 def espaco_de_cor_LAB(imagem):
     """
