@@ -34,7 +34,7 @@ class ImageMemory:
         self.image_selected = self.image_nextEdited
         self.index_selected = self.index_nextEdited
         
-        self.image_nextEdited = self.getBackImage(self.image_nextEdited)
+        self.image_nextEdited = self.getBackImage(self.index_selected)
         self.index_nextEdited = self.getBackIndex(self.index_nextEdited)
     
     def moveBack(self):
@@ -50,14 +50,14 @@ class ImageMemory:
         self.image_backEdited = self.getLastEdit()
         self.index_backEdited = self.getLastIndex()
     
-    def getBackImage(self, image):
-        return self.fila.getBackImage(image)
+    def getBackImage(self, index_selected):
+        return self.fila.getBackImage(index_selected)
     
     def getBackIndex(self, index):
         return self.fila.getBackIndex(index)
         
-    def getNextImage(self, image):
-        return self.fila.getNext(image)
+    def getNextImage(self, index_selected):
+        return self.fila.getNext(index_selected)
     
     def getNextIndex(self, index):
         return self.fila.getNextIndex(index)
@@ -72,10 +72,10 @@ class ImageMemory:
         self.image_selected = self.getLastEdit()
         self.index_selected = self.getLastIndex()
         
-        self.image_backEdited = self.getBackImage(self.image_selected)
+        self.image_backEdited = self.getBackImage(self.index_selected)
         self.index_backEdited = self.getBackIndex(self.index_selected)
         
-        self.image_nextEdited = self.getNextImage(self.image_selected)
+        self.image_nextEdited = self.getNextImage(self.index_selected)
         self.index_nextEdited = self.getNextIndex(self.index_selected)
     
     def restoreImage(self, index):

@@ -2,8 +2,8 @@
 
 class Configuration:
     # Window config
-    window_width = 800
-    window_height = 600
+    window_width = 1200
+    window_height = 1200
     
     limit_image_memory = 10
     icon_size = 16

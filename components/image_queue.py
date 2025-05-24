@@ -25,13 +25,11 @@ class ImageQueue:
     def getLastIndex(self):
         return len(self.images)-1
     
-    def getBackImage(self, image):
-        index = self.images.index(image) - 1
-        
-        if index < 0:
-            return image
-        
-        return self.images[index]
+    def getBackImage(self, index_selected):
+        if (len(self.images) -1 < index_selected):
+            return self.images[index_selected]
+        else:
+            return self.images[index_selected]
     
     def getBackIndex(self, index):
         index -= 1
@@ -42,13 +40,11 @@ class ImageQueue:
         return index
     
     
-    def getNext(self, image):
-        index = self.images.index(image) + 1
-        
-        if index >= len(self.images):
-            return self.getLast()
-        
-        return self.images[index]
+    def getNext(self, index_selected):
+        if (len(self.images) -1 > index_selected):
+            return self.images[index_selected + 1]
+        else:
+            return self.images[index_selected]
     
     def getNextIndex(self, index):
         index += 1
