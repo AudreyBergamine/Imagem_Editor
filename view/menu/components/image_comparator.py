@@ -1,5 +1,4 @@
 import tkinter as tk
-from PIL import Image, ImageTk
 
 from configuration.configuration import Configuration
 from view.menu.components.RoundedFrame import RoundedFrame
