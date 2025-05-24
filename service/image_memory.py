@@ -51,7 +51,7 @@ class ImageMemory:
         self.index_backEdited = self.getLastIndex()
     
     def getBackImage(self, image):
-        return self.fila.getBack(image)
+        return self.fila.getBackImage(image)
     
     def getBackIndex(self, index):
         return self.fila.getBackIndex(index)

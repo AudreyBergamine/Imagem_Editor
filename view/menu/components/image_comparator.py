@@ -1,36 +1,58 @@
 import tkinter as tk
+from PIL import Image, ImageTk
+import cv2
 
 from configuration.configuration import Configuration
 from view.menu.components.RoundedFrame import RoundedFrame
- 
+
 class ImageComparator(RoundedFrame):
-    def __init__(self, master, img_before=None, img_after=None):
-        super().__init__(master, 
-                bg_color=Configuration.image_comparator_background_color,
-                border_color="red",
-                corner_radius=20,
-                
-                highlightthickness=0)
-        
+    def __init__(self, master, app, img_before=None, img_after=None):
+        super().__init__(master,
+                         bg_color=Configuration.image_comparator_background_color,
+                         border_color="red",
+                         corner_radius=20,
+                         highlightthickness=0)
+
         self.master = master
+        self.app = app
         self.create_widgets()
-         
+        self.display_images()
+
     def create_widgets(self):
-        
-        
         self.container = tk.Frame(self, background="green")
-        self.container.pack(fill="both", padx=10, pady=10)
-        
-        
+        self.container.pack(fill="both", expand=True, padx=10, pady=10)
+
         self.container.grid_columnconfigure(0, weight=1)
         self.container.grid_columnconfigure(1, weight=1)
         self.container.grid_rowconfigure(0, weight=1)
-        
-        self.image_before = tk.Frame(self.container, background="blue", height=self.container.winfo_screenheight())
-        self.image_before.pack_forget()
+
+        self.image_before = tk.Frame(self.container, background="blue")
         self.image_before.grid(row=0, column=0, sticky="nsew", padx=2)
-        
-        self.image_after = tk.Frame(self.container, background="gray", height=self.container.winfo_screenheight())
-        self.image_after.pack_forget()
+
+        self.image_after = tk.Frame(self.container, background="gray")
         self.image_after.grid(row=0, column=1, sticky="nsew", padx=2)
-        
+
+    def show_image(self, frame, image_cv2):
+        if image_cv2 is None:
+            print("Imagem não carregada!")  # Depuração
+            return
+
+        # Converte a imagem BGR (OpenCV) para RGB (PIL)
+        image_rgb = cv2.cvtColor(image_cv2, cv2.COLOR_BGR2RGB)
+        image_pil = Image.fromarray(image_rgb)
+
+        # Redimensiona para caber no frame, se necessário
+        frame.update_idletasks()
+        w, h = frame.winfo_width(), frame.winfo_height()
+        if w > 0 and h > 0:
+            image_pil = image_pil.resize((w, h), Image.Resampling.LANCZOS)
+
+        # Cria e exibe a imagem
+        photo = ImageTk.PhotoImage(image_pil)
+        label = tk.Label(frame, image=photo)
+        label.image = photo  # Guarda referência
+        label.pack(expand=True, fill="both")
+
+    def display_images(self):
+        self.show_image(self.image_before, self.master.app.memory.image_backEdited)
+        self.show_image(self.image_after, self.master.app.memory.image_selected)

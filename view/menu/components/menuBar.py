@@ -6,6 +6,8 @@ class MenuBar(tk.Menu):
     def __init__(self, parent):
         super().__init__(parent)
 
+        self.app = parent
+
         # Menu "Arquivo"
         menu_arquivo = tk.Menu(self, tearoff=0)
         menu_arquivo.add_command(label="Novo", command=self.novo_arquivo)
@@ -32,7 +34,9 @@ class MenuBar(tk.Menu):
     def abrir_arquivo(self):
         imagem = selecionar_imagem()
         if imagem is not None:
-            abrir_imagem(imagem)
+            self.app.imagem_original = imagem
+            self.app.memory.addImage(self.app.imagem_original)
+            self.app.trocar_tela('menu_principal')
         else:
             messagebox.showinfo("Abrir", "Erro")
 

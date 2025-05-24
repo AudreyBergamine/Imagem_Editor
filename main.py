@@ -11,6 +11,7 @@ class App(tk.Tk):
         super().__init__()
         
         self.memory = ImageMemory()
+        self.imagem_original = None
                 
         self.title("Imagem Editor")
         largura_tela = Configuration.window_width
@@ -25,7 +26,7 @@ class App(tk.Tk):
                 
         self.frame = {}
         
-        self.trocar_tela("menu_principal")
+        # self.trocar_tela("menu_principal")
     
     def update(self):
 
@@ -36,12 +37,15 @@ class App(tk.Tk):
         self.update()
                     
         if nome_tela == "menu_principal":
-            nova_tela = MenuPrincipal(self.container, self.trocar_tela)
+            nova_tela = MenuPrincipal(self.container, self, self.trocar_tela)
             
         elif nome_tela == "Editor":
             nova_tela = Editor(self.container, self.trocar_tela)
         
         nova_tela.pack(fill="both", expand=True)
+
+    def __str__(self):
+        return "App"
 
 if __name__ == "__main__":
     app = App()

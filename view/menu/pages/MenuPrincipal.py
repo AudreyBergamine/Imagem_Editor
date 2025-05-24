@@ -6,9 +6,10 @@ from view.menu.components.menu_principal.tools_bar import ToolsBar
 
 
 class MenuPrincipal(tk.Frame):
-    def __init__(self, master, mudar_tela):
+    def __init__(self, master, app, mudar_tela):
         super().__init__(master)
         self.mudar_tela = mudar_tela
+        self.app = app
 
         self.background_color = "#555"
         self.border_color = "#333"
@@ -25,6 +26,8 @@ class MenuPrincipal(tk.Frame):
         toolsBar = ToolsBar(self, [])
         toolsBar.pack() 
         
-        image_comparator = ImageComparator(self)
+        image_comparator = ImageComparator(master=self,app= self.app)
         image_comparator.pack(fill="both", expand=True)
     
+    def __str__(self):
+        return "Menu Principal"
