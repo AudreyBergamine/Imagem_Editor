@@ -1,5 +1,5 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
+from .def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 
 # Operadores Morfológicos - Dilatação
 # A dilatação é uma operação morfológica que adiciona pixels à borda de um objeto na imagem.

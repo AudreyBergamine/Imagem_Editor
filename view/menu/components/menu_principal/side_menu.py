@@ -93,21 +93,38 @@ import os
 class Side_menu(RoundedFrame):
     def __init__(self, master):
         super().__init__(master, 
-                        bg_color=Configuration.side_background_color,
-                        border_color="black",
-                        corner_radius=20,
-                        width=Configuration.side_menu_width,
-                        height=Configuration.side_menu_height,
-                        highlightthickness=0)
-        
+                         bg_color=Configuration.side_background_color,
+                         border_color="black",
+                         corner_radius=20,
+                         width=Configuration.side_menu_width,
+                         height=Configuration.side_menu_height,
+                         highlightthickness=0)
+
         self.master = master
+        self.pack_propagate(False)  # Impede que o frame encolha ao conteúdo
         self.create_widgets()
     
     def create_widgets(self):
-        # Frame interno para conter os widgets
-        self.inner_frame = tk.Frame(self, bg=Configuration.side_background_color, width=Configuration.side_menu_width - 20, height=Configuration.side_menu_height - 20)
-        self.inner_frame.pack_propagate(False)  # Impede que o frame redimensione automaticamente
-        self.create_window(Configuration.side_menu_width // 2, Configuration.side_menu_height // 2, window=self.inner_frame, anchor="center")
+        largura_menu = max(Configuration.side_menu_width, 200)  # largura mínima segura
+
+        scrollbar = tk.Scrollbar(self, orient="vertical", command=self.yview)
+        self.configure(yscrollcommand=scrollbar.set)
+        scrollbar.pack(side="right", fill="y")
+
+        # Frame interno com largura fixa
+        self.inner_frame = tk.Frame(self, bg=Configuration.side_background_color)
+        self.window_id = self.create_window((0, 0), window=self.inner_frame, anchor="nw", width=largura_menu)
+
+        def on_configure(event):
+            self.configure(scrollregion=self.bbox("all"))
+            self.itemconfig(self.window_id, width=self.winfo_width())  # Atualiza largura do frame interno
+
+        self.inner_frame.bind("<Configure>", on_configure)
+
+        def _on_mousewheel(event):
+            self.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        self.bind_all("<MouseWheel>", _on_mousewheel)
         
         # Lista de funções e nomes dos botões
         funcoes = [
@@ -161,10 +178,8 @@ class Side_menu(RoundedFrame):
             def_0_abrir_imagem.abrir_imagem()
 
         for nome, funcao in funcoes:
-            if nome == "Abrir Imagem":
-                callback = abrir_imagem_callback
-            else:
-                callback = funcao
+            callback = abrir_imagem_callback if nome == "Abrir Imagem" else funcao
+
             btn = IconButton(
                 self.inner_frame,
                 image_path="view/static/images/engrenagem.png",
@@ -173,7 +188,7 @@ class Side_menu(RoundedFrame):
                 background_color="#555",
                 text_color="white"
             )
-            btn.pack(side="top", fill="x", pady=2)
+            btn.pack(side="top", fill="x", padx=5, pady=2)  # Adicione padding horizontal
 
 
 

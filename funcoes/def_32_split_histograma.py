@@ -1,5 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 
 # “Splitting” do histograma
 # A função split_histogram separa os canais de cor de uma imagem 

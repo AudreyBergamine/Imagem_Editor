@@ -1,5 +1,5 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
+from .def_0_abrir_imagem import abrir_imagem
 
 # Função para dividir duas imagens pixel a pixel
 

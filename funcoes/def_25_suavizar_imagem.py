@@ -1,5 +1,4 @@
 import cv2
-from def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 
 def suavizar_imagem(imagem):
     # Aplicar suavização na imagem usando o filtro GaussianBlur
