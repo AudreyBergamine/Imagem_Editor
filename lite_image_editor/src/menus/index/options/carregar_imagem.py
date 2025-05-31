@@ -1,5 +1,7 @@
 import os
 from tkinter import Image, Tk, filedialog
+
+import cv2
 from src.core.image_memory import ImageMemory
 from src.core.menu import Option
 
@@ -14,29 +16,20 @@ class Carregar_Imagem(Option):
         
         print(self.memory.fila)
     
+    def listar_imagens(self, diretorio="."):
+        
+        """Lista os arquivos de imagem no diretório especificado (padrão: diretório atual)."""
+        extensoes_imagem = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"}
+        return [f for f in os.listdir(diretorio) if os.path.isfile(os.path.join(diretorio, f)) and os.path.splitext(f)[1].lower() in extensoes_imagem]
+
     def selecionar_imagem(self):
-        # Cria uma janela Tkinter oculta
-        root = Tk()
-        root.withdraw()
+        options = self.listar_imagens() + ["Voltar"]
+        select = self.menu.options(opções=options)
 
-        # Abre a janela de seleção de arquivos
-        file_path = filedialog.askopenfilename(
-            title="Selecione uma imagem",
-            filetypes=[
-                ("Imagens", "*.png *.jpg *.jpeg *.bmp *.gif"),
-                ("Todos os arquivos", "*.*")
-            ]
-        )
-
-        # Fecha a janela root
-        root.destroy()
-
-        if not file_path or not os.path.exists(file_path):
+        if options[select] == "Voltar":
             return None
+        
+        imagem = cv2.imread(options[select])
+        return imagem
 
-        try:
-            imagem = Image.open(file_path)
-            return imagem
-        except Exception as e:
-            print(f"Erro ao abrir a imagem: {e}")
-            return None
+
