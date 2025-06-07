@@ -3,6 +3,9 @@ from service.image_memory import ImageMemory
 from .def_0_abrir_imagem import abrir_imagem, selecionar_imagem
 
 def adicionar_imagens(memory: ImageMemory):
+    """
+    Adiciona duas imagens pixel a pixel e retorna a imagem resultante."""
+    
     
     # Abrir as duas imagens
     img2 = selecionar_imagem()

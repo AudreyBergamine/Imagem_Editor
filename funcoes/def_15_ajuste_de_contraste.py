@@ -2,6 +2,10 @@ import cv2
 from service.image_memory import ImageMemory
 
 def ajuste_de_contraste(memory: ImageMemory, k):
+    """
+    Ajusta o contraste de uma imagem multiplicando cada pixel por um fator k.
+    """
+
     # Obter as dimensões da imagem
     linhas, colunas = ImageMemory.shape[:2]
     

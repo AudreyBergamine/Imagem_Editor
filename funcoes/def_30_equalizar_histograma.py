@@ -2,6 +2,7 @@ import cv2
 from service.image_memory import ImageMemory
 
 def equalizar_histograma(memory: ImageMemory):
+    """ Aplica a equalização de histograma a uma imagem em escala de cinza. """
     
     # Converter a imagem para escala de cinza
     imagem_cinza = cv2.cvtColor(ImageMemory, cv2.COLOR_BGR2GRAY)

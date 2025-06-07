@@ -2,6 +2,10 @@ import cv2
 from service.image_memory import ImageMemory
 
 def negativo_da_imagem(memory: ImageMemory):
+    """
+    Aplica a transformação negativa a uma imagem.
+    """
+
     # Obtém as dimensões da imagem
     linhas, colunas = ImageMemory.shape[:2]
         

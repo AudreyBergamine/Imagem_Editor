@@ -4,6 +4,7 @@ from service.image_memory import ImageMemory
 
 # Função para aplicar o filtro mediana 
 def filtro_mediana(memory: ImageMemory):
+    """ Aplica um filtro de mediana a uma imagem. Este filtro substitui cada pixel pelo valor mediano dos pixels vizinhos. """
     
     # Obter dimensões da imagem
     linhas, colunas = ImageMemory.shape

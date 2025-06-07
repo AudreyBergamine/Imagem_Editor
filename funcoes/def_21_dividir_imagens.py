@@ -4,6 +4,8 @@ from .def_0_abrir_imagem import abrir_imagem, selecionar_imagem
 
 # Função para dividir duas imagens pixel a pixel
 def dividir_imagens(memory: ImageMemory):
+    """ Divide duas imagens pixel a pixel e retorna a imagem resultante. """
+    
 # Abrir as duas imagens
     imagem2 = selecionar_imagem()
     # Certifique-se de que as imagens têm o mesmo tamanho

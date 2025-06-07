@@ -1,6 +1,7 @@
 import cv2
 
 def ajuste_de_brilho(imagem, k):
+    """ Ajusta o brilho de uma imagem adicionando um valor k a cada pixel."""
     
     # Obter as dimensões da imagem
     linhas, colunas = imagem.shape[:2]

@@ -1,7 +1,10 @@
 import cv2
 
 def converter_modelos_cor(imagem):
-    
+    """
+    Converte uma imagem para diferentes modelos de cor.
+    """
+
     # Converte a imagem para diferentes modelos de cor
     imagemNC = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
     imagemCrCb = cv2.cvtColor(imagem, cv2.COLOR_BGR2YCrCb)

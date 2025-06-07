@@ -5,6 +5,8 @@ from .def_0_abrir_imagem import selecionar_imagem, abrir_imagem
 # Operadores Morfológicos - Dilatação
 # A dilatação é uma operação morfológica que adiciona pixels à borda de um objeto na imagem.
 def dilatacao(memory: ImageMemory, kernel_size=(5, 5), iterations=2):
+    """ Aplica a dilatação a uma imagem usando um elemento estruturante definido. """
+    
     # Define o elemento estruturante
     elemento_estruturante = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, kernel_size)
     

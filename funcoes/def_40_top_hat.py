@@ -5,6 +5,7 @@ from service.image_memory import ImageMemory
 #  e objetos escuros em fundos claros.
 #  O operador Top Hat é útil para destacar objetos que são mais brilhantes do que o fundo.
 def top_hat(memory: ImageMemory, kernel_size=(25, 25)):
+    """ Aplica o operador morfológico Top Hat a uma imagem. """
     
     # Define o elemento estruturante
     elemento_estruturante = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, kernel_size)

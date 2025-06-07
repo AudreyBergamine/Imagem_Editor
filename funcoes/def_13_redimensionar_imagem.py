@@ -1,6 +1,7 @@
 import cv2
 
 def redimensionar_imagem(imagem, escala):
+    """ Redimensiona a imagem de acordo com a escala fornecida."""
     
     # Obtém as dimensões originais da imagem
     largura = int(imagem.shape[1] * escala)

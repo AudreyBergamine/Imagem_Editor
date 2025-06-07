@@ -5,6 +5,8 @@ from service.image_memory import ImageMemory
 # Função para eliminar ruídos em uma imagem usando morfologia matemática
 # Esta função aplica uma operação de abertura para remover pequenos ruídos na imagem
 def eliminacao_ruidos(memory: ImageMemory):
+    """
+    Elimina ruídos em uma imagem usando morfologia matemática."""
     
     # Define o elemento estruturante
     elemento_estruturante = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))

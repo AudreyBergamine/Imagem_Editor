@@ -1,6 +1,7 @@
 import cv2
 
 def regiao_de_interesse(imagem):
+    """ Extrai e exibe uma região de interesse da imagem. """
     
     # Definir a região de interesse (exemplo: linhas 0 a 30, colunas 20 a 50)
     ROI = imagem[0:30, 20:50]

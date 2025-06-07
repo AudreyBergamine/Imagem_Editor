@@ -4,6 +4,7 @@ from service.image_memory import ImageMemory
 
 
 def separar_canais_rgb(memory: ImageMemory):
+    """ Separa os canais de cores RGB de uma imagem e exibe cada canal individualmente. """
 
     # Separa os canais de cores
     azul, verde, vermelho = cv2.split(memory.getLastEdit())

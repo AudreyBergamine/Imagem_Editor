@@ -2,7 +2,8 @@ import cv2
 from service.image_memory import ImageMemory
 
 def realcar_imagem(memory: ImageMemory):
-    
+    """ Realça as cores de uma imagem. """
+
     # Converter a imagem de RGB para HSV
     imagem_hsv = cv2.cvtColor(ImageMemory, cv2.COLOR_BGR2HSV)
     

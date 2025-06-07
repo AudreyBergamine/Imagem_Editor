@@ -4,6 +4,7 @@ from service.image_memory import ImageMemory
 
 
 def calcular_histograma_colorido(memory: ImageMemory):
+    """ Calcula o histograma de uma imagem colorida e retorna os vetores de histograma para os canais R, G e B. """
     
     # Inicializar os vetores HR, HG e HB com zeros
     HR = [0] * 256

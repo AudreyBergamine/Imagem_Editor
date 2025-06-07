@@ -6,6 +6,8 @@ from .def_0_abrir_imagem import abrir_imagem, selecionar_imagem
 
 # Função para calcular a média de duas imagens
 def media_de_duas_imagens(memory: ImageMemory):
+    """ Calcula a média de duas imagens pixel a pixel e retorna a imagem resultante. """
+    
     # Abrir as duas imagens
     imagem2 = selecionar_imagem()
     # Certifique-se de que as imagens têm o mesmo tamanho

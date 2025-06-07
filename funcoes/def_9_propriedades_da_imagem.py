@@ -1,7 +1,10 @@
 import cv2
 
 def propriedades_da_imagem(imagem):
-    
+    """
+    Obtém as propriedades de uma imagem.
+    """
+
     # Exibe as propriedades da imagem
     propriedades = {
         "altura": imagem.shape[0],

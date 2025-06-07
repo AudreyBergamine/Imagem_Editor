@@ -2,7 +2,8 @@ import cv2
 from service.image_memory import ImageMemory
 
 def calcular_histograma(memory: ImageMemory):
-    
+    """ Calcula o histograma de uma imagem em tons de cinza. """
+
     # Obter as dimensões da imagem
     linhas, colunas = ImageMemory.shape[:2]
     

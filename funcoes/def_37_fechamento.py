@@ -4,6 +4,8 @@ from service.image_memory import ImageMemory
 # Operadores Morfológicos - Fechamento
 # O fechamento é uma operação morfológica que preenche pequenos buracos em objetos na imagem.
 def fechamento(memory: ImageMemory, kernel_size=(5, 5), iterations=1):
+    """ Aplica o fechamento a uma imagem usando um elemento estruturante definido. """
+    
     # Define o elemento estruturante
     elemento_estruturante = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, kernel_size)
 

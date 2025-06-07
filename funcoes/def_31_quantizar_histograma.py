@@ -4,6 +4,8 @@ from service.image_memory import ImageMemory
 
 # Quantização ou agrupamento do histograma
 def quantizar_histograma(memory: ImageMemory, quantidade_de_cores):
+    """
+    Quantiza o histograma de uma imagem, reduzindo o número de cores."""
     
     # Obter os valores dos canais R, G e B
     R = ImageMemory[:, :, 0]

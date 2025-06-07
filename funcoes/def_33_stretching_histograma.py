@@ -3,7 +3,10 @@ import numpy as np
 from service.image_memory import ImageMemory
 
 def stretching_histograma(memory: ImageMemory):
-    
+    """
+    Aplica o stretching de histograma a uma imagem.
+    """
+
     # Obter os valores mínimo e máximo dos pixels da imagem
     min_val = ImageMemory.min()
     max_val = ImageMemory.max()
