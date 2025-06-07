@@ -6,10 +6,12 @@ from service.image_memory import ImageMemory
 def abertura(memory: ImageMemory):
     """ Aplica a abertura a uma imagem usando um elemento estruturante definido. """
     
+    imagem = memory.getLastEdit()
+    
     # Define o elemento estruturante
     elemento_estruturante = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     
     # Aplica o operador morfológico de abertura
-    imagem_processada = cv2.morphologyEx(ImageMemory, cv2.MORPH_OPEN, elemento_estruturante)
-    
+    imagem_processada = cv2.morphologyEx(imagem, cv2.MORPH_OPEN, elemento_estruturante)
+
     return imagem_processada

@@ -7,11 +7,13 @@ def quantizar_histograma(memory: ImageMemory, quantidade_de_cores):
     """
     Quantiza o histograma de uma imagem, reduzindo o número de cores."""
     
-    # Obter os valores dos canais R, G e B
-    R = ImageMemory[:, :, 0]
-    G = ImageMemory[:, :, 1]
-    B = ImageMemory[:, :, 2]
+    imagem = memory.getLastEdit()
     
+    # Obter os valores dos canais R, G e B
+    R = imagem[:, :, 0]
+    G = imagem[:, :, 1]
+    B = imagem[:, :, 2]
+
     # Aplicar a quantização
     R = np.floor(R / 256 * quantidade_de_cores) * (256 / quantidade_de_cores)
     G = np.floor(G / 256 * quantidade_de_cores) * (256 / quantidade_de_cores)

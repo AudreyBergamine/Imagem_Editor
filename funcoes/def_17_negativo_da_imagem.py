@@ -5,17 +5,16 @@ def negativo_da_imagem(memory: ImageMemory):
     """
     Aplica a transformação negativa a uma imagem.
     """
+    
+    imagem = memory.getLastEdit()
 
     # Obtém as dimensões da imagem
-    linhas, colunas = ImageMemory.shape[:2]
-        
+    linhas, colunas = imagem.shape[:2]
+
     # Aplica a transformação negativa
     for x in range(linhas):
         for y in range(colunas):
-            ImageMemory[x, y] = 255 - ImageMemory[x, y]
-    
-    return ImageMemory
+            imagem[x, y] = 255 - imagem[x, y]
 
+    return imagem
 
-
-    

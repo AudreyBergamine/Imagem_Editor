@@ -1,7 +1,9 @@
 import cv2
+from service.image_memory import ImageMemory
 from .def_10_pegar_cor_de_um_pixel import pegar_cor_de_um_pixel
 
-def modificar_cor_de_um_pixel(imagem, coordenadas, nova_cor, verbose=False):
+def modificar_cor_de_um_pixel(memory: ImageMemory, coordenadas, nova_cor, verbose=False):
+    
     """
     Modifica a cor de um pixel ou região da imagem.
 
@@ -14,6 +16,10 @@ def modificar_cor_de_um_pixel(imagem, coordenadas, nova_cor, verbose=False):
     Returns:
         A imagem editada.
     """
+    # Obtém a imagem atual da memória
+    imagem = memory.getLastEdit()
+    
+    
     # Validação de entrada
     if not (0 <= coordenadas[0] < imagem.shape[0] and 0 <= coordenadas[1] < imagem.shape[1]):
         raise ValueError("As coordenadas estão fora dos limites da imagem.")

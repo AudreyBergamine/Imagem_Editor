@@ -1,8 +1,11 @@
 import cv2
+from service.image_memory import ImageMemory
 
-def ajuste_de_brilho(imagem, k):
+def ajuste_de_brilho(memory: ImageMemory, k):
     """ Ajusta o brilho de uma imagem adicionando um valor k a cada pixel."""
-    
+
+    imagem = memory.getLastEdit()
+
     # Obter as dimensões da imagem
     linhas, colunas = imagem.shape[:2]
 

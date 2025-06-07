@@ -6,11 +6,13 @@ from service.image_memory import ImageMemory
 def filtro_mediana(memory: ImageMemory):
     """ Aplica um filtro de mediana a uma imagem. Este filtro substitui cada pixel pelo valor mediano dos pixels vizinhos. """
     
-    # Obter dimensões da imagem
-    linhas, colunas = ImageMemory.shape
-    # Criar uma cópia da imagem para armazenar a imagem filtrada
-    imagem_filtrada = np.zeros_like(ImageMemory)
+    imagem = memory.getLastEdit()
     
+    # Obter dimensões da imagem
+    linhas, colunas = imagem.shape[:2]
+    # Criar uma cópia da imagem para armazenar a imagem filtrada
+    imagem_filtrada = np.zeros_like(imagem)
+
     # Percorrer cada pixel da imagem (ignorando as bordas)
     for x in range(1, linhas - 1):
         for y in range(1, colunas - 1):
@@ -18,8 +20,8 @@ def filtro_mediana(memory: ImageMemory):
             vetor = []
             for i in range(-1, 2):
                 for j in range(-1, 2):
-                    vetor.append(ImageMemory[x + i, y + j])
-            
+                    vetor.append(imagem[x + i, y + j])
+
             # Ordenar o vetor
             vetor.sort()
             
