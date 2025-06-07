@@ -7,4 +7,4 @@ def convert_RGB_to_HSV(memory: ImageMemory):
     # Converter a imagem de RGB para HSV
     imagem_hsv = cv2.cvtColor(memory.getLastEdit(), cv2.COLOR_BGR2HSV)
     
-    return imagem_hsv
+    memory.addEdit(imagem_hsv)

@@ -6,12 +6,9 @@ def split_and_merge(memory: ImageMemory):
     """
     Realiza a separação e junção de canais de uma imagem.
     Permite realizar alterações nos canais antes de juntá-los novamente.
-
-    :param imagem: Caminho da imagem a ser processada.
     """
     # Converte para o espaço de cores HSV
     imagem_hsv = cv2.cvtColor(memory.getLastEdit(), cv2.COLOR_BGR2HSV)
-    cv2.imshow("Imagem HSV", imagem_hsv)
 
     # Realiza separação de canais HSV
     matiz, saturacao, valor = cv2.split(imagem_hsv)
@@ -28,5 +25,4 @@ def split_and_merge(memory: ImageMemory):
     imagem_resultado = cv2.cvtColor(imagem_hsv_modificada, cv2.COLOR_HSV2BGR)
     # cv2.imshow("Imagem HSV para RGB", imagem_resultado)
     
-    return imagem_resultado
-
+    memory.addEdit(imagem_resultado)
