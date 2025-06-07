@@ -14,4 +14,4 @@ def abertura(memory: ImageMemory):
     # Aplica o operador morfológico de abertura
     imagem_processada = cv2.morphologyEx(imagem, cv2.MORPH_OPEN, elemento_estruturante)
 
-    return imagem_processada
+    memory.addEdit(imagem_processada)

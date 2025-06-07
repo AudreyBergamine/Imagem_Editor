@@ -9,4 +9,5 @@ def suavizar_imagem(memory: ImageMemory):
 
     # Aplicar suavização na imagem usando o filtro GaussianBlur
     imagem_suavizada = cv2.GaussianBlur(imagem, (13, 13), 3)
-    return imagem_suavizada
+
+    memory.addEdit(imagem_suavizada)

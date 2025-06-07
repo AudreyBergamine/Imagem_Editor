@@ -7,4 +7,5 @@ def filtro_media(memory: ImageMemory, kernel_size=(3, 3)):
     imagem = memory.getLastEdit()
 
     imagem_filtrada = cv2.blur(imagem, kernel_size)
-    return imagem_filtrada
+
+    memory.addEdit(imagem_filtrada)

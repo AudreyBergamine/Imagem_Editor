@@ -16,4 +16,4 @@ def abertura_fechamento_tons_cinza(memory: ImageMemory):
     # Aplica a operação de fechamento
     imagem_fechamento = cv2.morphologyEx(imagem_abertura, cv2.MORPH_CLOSE, elemento_estruturante)
     
-    return imagem_fechamento
+    memory.addEdit(imagem_fechamento)

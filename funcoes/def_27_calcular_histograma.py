@@ -17,6 +17,5 @@ def calcular_histograma(memory: ImageMemory):
         for y in range(colunas):
             intensidade = imagem[x, y]
             vetor_histograma[intensidade] += 1
-    
-    return vetor_histograma
-  
+
+    memory.addEdit(vetor_histograma)

@@ -12,4 +12,4 @@ def gradiente_morfologico(memory: ImageMemory):
     # Aplica o gradiente morfológico
     imagem_processada = cv2.morphologyEx(imagem, cv2.MORPH_GRADIENT, elemento_estruturante)
 
-    return imagem_processada
+    memory.addEdit(imagem_processada)

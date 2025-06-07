@@ -15,4 +15,4 @@ def erosao(memory: ImageMemory, kernel_size=(5, 5), iterations=1):
     # Aplica a erosão na imagem
     imagem_processada = cv2.erode(imagem, elemento_estruturante, iterations=iterations)
 
-    return imagem_processada
+    memory.addEdit(imagem_processada)

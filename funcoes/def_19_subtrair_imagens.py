@@ -14,4 +14,4 @@ def subtrair_imagens(memory: ImageMemory):
     # Subtrair as duas imagens
     img_subtraida = cv2.subtract(imagem, img2)
 
-    return img_subtraida
+    memory.addEdit(img_subtraida)

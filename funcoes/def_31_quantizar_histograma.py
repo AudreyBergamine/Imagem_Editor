@@ -21,4 +21,5 @@ def quantizar_histograma(memory: ImageMemory, quantidade_de_cores):
     
     # Recriar a imagem quantizada
     imagem_quantizada = np.stack([R, G, B], axis=2).astype(np.uint8)
-    return imagem_quantizada
+    
+    memory.addEdit(imagem_quantizada)

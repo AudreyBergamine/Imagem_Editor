@@ -15,4 +15,4 @@ def dilatacao(memory: ImageMemory, kernel_size=(5, 5), iterations=2):
     # Aplica o operador morfológico de dilatação
     imagem_dilatada = cv2.dilate(imagem, elemento_estruturante, iterations=iterations)
 
-    return imagem_dilatada
+    memory.addEdit(imagem_dilatada)

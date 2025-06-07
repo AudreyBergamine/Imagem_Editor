@@ -22,5 +22,5 @@ def dividir_imagens(memory: ImageMemory):
 
     # Converter de volta para o tipo original
     imagem_resultante = cv2.convertScaleAbs(imagem_resultante)
-    
-    return imagem_resultante
+
+    memory.addEdit(imagem_resultante)

@@ -11,6 +11,5 @@ def equalizar_histograma(memory: ImageMemory):
 
     # Aplicar a equalização de histograma
     imagem_equalizada = cv2.equalizeHist(imagem_cinza)
-    
-    return imagem_equalizada
-  
+
+    memory.addEdit(imagem_equalizada)

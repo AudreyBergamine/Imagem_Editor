@@ -15,4 +15,4 @@ def multiplicar_imagens(memory: ImageMemory, mascara):
     # Multiplicar a imagem pela máscara
     imagem_resultante = cv2.multiply(imagem, mascara_binaria)
 
-    return imagem_resultante
+    memory.addEdit(imagem_resultante)

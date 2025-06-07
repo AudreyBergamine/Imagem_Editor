@@ -13,6 +13,7 @@ def redimensionar_imagem(memory: ImageMemory, escala):
 
     # Redimensiona a imagem
     imagem_redimensionada = cv2.resize(imagem, dimensoes, interpolation=cv2.INTER_AREA)
-
+    memory.addEdit(imagem_redimensionada)
+    
     return imagem_redimensionada
    

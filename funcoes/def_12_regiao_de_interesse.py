@@ -8,7 +8,8 @@ def regiao_de_interesse(memory: ImageMemory):
     
     # Definir a região de interesse (exemplo: linhas 0 a 30, colunas 20 a 50)
     ROI = imagem[0:30, 20:50]
-    
+    memory.addEdit(ROI)
+
     # Exibir a região de interesse
     cv2.imshow("Região de Interesse", ROI)
     

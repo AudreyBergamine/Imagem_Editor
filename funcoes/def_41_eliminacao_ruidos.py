@@ -16,4 +16,4 @@ def eliminacao_ruidos(memory: ImageMemory):
     # Aplica a operação de abertura para eliminar ruídos
     imagem_processada = cv2.morphologyEx(imagem, cv2.MORPH_OPEN, elemento_estruturante)
 
-    return imagem_processada
+    memory.addEdit(imagem_processada)

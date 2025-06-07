@@ -19,4 +19,4 @@ def realcar_imagem(memory: ImageMemory):
     # Aplicar a máscara na imagem original
     imagem_realcada = cv2.bitwise_and(imagem, imagem, mask=mascara)
 
-    return imagem_realcada
+    memory.addEdit(imagem_realcada)

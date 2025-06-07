@@ -23,4 +23,4 @@ def ajuste_de_contraste(memory: ImageMemory, k):
                 valor_editado = valor_original + (valor_original * k / 100)
                 imagem[x, y, c] = max(0, min(255, int(valor_editado)))  # Garantir valores válidos
 
-    return imagem
+    memory.addEdit(imagem)

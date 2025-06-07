@@ -3,6 +3,7 @@
             # ("Separar Canais RGB", def_2_separar_canais_RGB),
             # ("RGB para HSV", def_3_convert_RGB_to_HSV),
             # ("HSV para RGB", def_4_convert_HSV_to_RGB),
+            
             # ("Espaço de Cores YCrCb", def_5_espaco_de_cores_YCrCb),
             # ("Espaço de Cor LAB", def_6_espaco_de_cor_LAB),
             # ("Tons de Cinza", def_7_convertendo_em_tons_de_cinza),

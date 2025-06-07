@@ -16,5 +16,5 @@ def negativo_da_imagem(memory: ImageMemory):
         for y in range(colunas):
             imagem[x, y] = 255 - imagem[x, y]
 
-    return imagem
+    memory.addEdit(imagem)
 

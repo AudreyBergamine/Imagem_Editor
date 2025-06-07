@@ -33,4 +33,5 @@ def modificar_cor_de_um_pixel(memory: ImageMemory, coordenadas, nova_cor, verbos
 
     # Modifica a cor do pixel
     imagem[coordenadas] = nova_cor
-    return imagem
+    
+    memory.addEdit(imagem)

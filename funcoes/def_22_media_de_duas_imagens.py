@@ -17,4 +17,5 @@ def media_de_duas_imagens(memory: ImageMemory):
         raise ValueError("As imagens devem ter o mesmo tamanho para média.")
     # Calcular a média pixel a pixel
     imagem_resultante = cv2.addWeighted(imagem, 0.5, imagem2, 0.5, 0)
-    return imagem_resultante
+
+    memory.addEdit(imagem_resultante)

@@ -28,7 +28,7 @@ def filtro_mediana(memory: ImageMemory):
             # Atribuir o valor mediano ao pixel central
             imagem_filtrada[x, y] = vetor[4]  # Posição central do vetor ordenado
     
-    return imagem_filtrada
+    memory.addEdit(imagem_filtrada)
 
 """
 Exemplo do material da Prof Marcia: 

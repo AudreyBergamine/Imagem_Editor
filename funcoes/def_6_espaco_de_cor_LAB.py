@@ -12,5 +12,7 @@ def espaco_de_cor_LAB(memory: ImageMemory):
     numpy.ndarray: Imagem convertida para o espaço de cor LAB.
     """
     imagem_LAB = cv2.cvtColor(memory.getLastEdit(), cv2.COLOR_BGR2Lab)
+
+    memory.addEdit(imagem_LAB)
     
     return imagem_LAB

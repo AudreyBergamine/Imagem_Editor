@@ -13,5 +13,6 @@ def inverter_cores(memory: ImageMemory):
 
     # Inverte as cores da imagem
     imagem = max_intensidade - imagem
+    memory.addEdit(imagem)
 
     return imagem

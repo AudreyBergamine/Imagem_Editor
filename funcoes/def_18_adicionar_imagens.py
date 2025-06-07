@@ -20,4 +20,4 @@ def adicionar_imagens(memory: ImageMemory):
     img_resultado = cv2.add(imagem, img2)
 
     # Retornar a imagem resultante
-    return img_resultado
+    memory.addEdit(img_resultado)

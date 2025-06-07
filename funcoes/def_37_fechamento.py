@@ -14,4 +14,4 @@ def fechamento(memory: ImageMemory, kernel_size=(5, 5), iterations=1):
     # Aplica o operador morfológico de fechamento
     imagem_processada = cv2.morphologyEx(imagem, cv2.MORPH_CLOSE, elemento_estruturante)
 
-    return imagem_processada
+    memory.addEdit(imagem_processada)

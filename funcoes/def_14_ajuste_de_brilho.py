@@ -18,4 +18,4 @@ def ajuste_de_brilho(memory: ImageMemory, k):
             for c in range(imagem.shape[2]):  # Para cada canal de cor
                 imagem[x, y, c] = min(max(imagem[x, y, c] + k, 0), 255)
 
-    return imagem
+    memory.addEdit(imagem)
