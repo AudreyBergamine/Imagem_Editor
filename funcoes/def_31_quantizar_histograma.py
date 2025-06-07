@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
+from service.image_memory import ImageMemory
 
 # Quantização ou agrupamento do histograma
-def quantizar_histograma(imagem, quantidade_de_cores):
+def quantizar_histograma(memory: ImageMemory, quantidade_de_cores):
     
     # Obter os valores dos canais R, G e B
-    R = imagem[:, :, 0]
-    G = imagem[:, :, 1]
-    B = imagem[:, :, 2]
+    R = ImageMemory[:, :, 0]
+    G = ImageMemory[:, :, 1]
+    B = ImageMemory[:, :, 2]
     
     # Aplicar a quantização
     R = np.floor(R / 256 * quantidade_de_cores) * (256 / quantidade_de_cores)

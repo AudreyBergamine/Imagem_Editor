@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
+from service.image_memory import ImageMemory
 
 # Função para aplicar o filtro mediana 
-def filtro_mediana(imagem):
+def filtro_mediana(memory: ImageMemory):
     
     # Obter dimensões da imagem
-    linhas, colunas = imagem.shape
+    linhas, colunas = ImageMemory.shape
     # Criar uma cópia da imagem para armazenar a imagem filtrada
-    imagem_filtrada = np.zeros_like(imagem)
+    imagem_filtrada = np.zeros_like(ImageMemory)
     
     # Percorrer cada pixel da imagem (ignorando as bordas)
     for x in range(1, linhas - 1):
@@ -16,7 +17,7 @@ def filtro_mediana(imagem):
             vetor = []
             for i in range(-1, 2):
                 for j in range(-1, 2):
-                    vetor.append(imagem[x + i, y + j])
+                    vetor.append(ImageMemory[x + i, y + j])
             
             # Ordenar o vetor
             vetor.sort()

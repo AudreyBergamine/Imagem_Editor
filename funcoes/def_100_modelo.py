@@ -8,7 +8,7 @@ import cv2
 # # e o exemplo da minha professora
 
 # Meu Exemplo simples:
-# def convert_RGB_to_HSV(imagem):
+# def convert_RGB_to_HSV(memory: ImageMemory):
     
 #     # Converter a imagem de RGB para HSV
 #     imagem_hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)

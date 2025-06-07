@@ -1,11 +1,12 @@
 import cv2
+from service.image_memory import ImageMemory
 
 # “Splitting” do histograma
 # A função split_histogram separa os canais de cor de uma imagem 
 # e calcula o histograma para cada canal.
-def split_histograma(imagem):
+def split_histograma(memory: ImageMemory):
     # Separar os canais de cor
-    B, G, R = cv2.split(imagem)
+    B, G, R = cv2.split(ImageMemory)
     
     # Calcular o histograma para cada canal
     hist_B = cv2.calcHist([B], [0], None, [256], [0, 256])

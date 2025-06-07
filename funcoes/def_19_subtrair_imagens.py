@@ -1,14 +1,14 @@
 import cv2
-from .def_0_abrir_imagem import abrir_imagem
+from service.image_memory import ImageMemory
+from .def_0_abrir_imagem import abrir_imagem, selecionar_imagem
 
-def subtrair_imagens(imagem1, imagem2):
+def subtrair_imagens(memory: ImageMemory):
     
     # Abrir as duas imagens
-    img1 = abrir_imagem(imagem1)
-    img2 = abrir_imagem(imagem2)
+    img2 = selecionar_imagem()
 
     # Subtrair as duas imagens
-    img_subtraida = cv2.subtract(img1, img2)
+    img_subtraida = cv2.subtract(ImageMemory, img2)
     
     
     return img_subtraida

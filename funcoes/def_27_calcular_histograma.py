@@ -1,9 +1,10 @@
 import cv2
+from service.image_memory import ImageMemory
 
-def calcular_histograma(imagem):
+def calcular_histograma(memory: ImageMemory):
     
     # Obter as dimensões da imagem
-    linhas, colunas = imagem.shape[:2]
+    linhas, colunas = ImageMemory.shape[:2]
     
     # Inicializar o vetor do histograma com zeros (256 níveis de intensidade)
     vetor_histograma = [0] * 256
@@ -11,7 +12,7 @@ def calcular_histograma(imagem):
     # Calcular o histograma
     for x in range(linhas):
         for y in range(colunas):
-            intensidade = imagem[x, y]
+            intensidade = ImageMemory[x, y]
             vetor_histograma[intensidade] += 1
     
     return vetor_histograma
