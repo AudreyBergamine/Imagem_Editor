@@ -2,7 +2,9 @@ import cv2
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
-def selecionar_imagem():
+from service.image_memory import ImageMemory
+
+def selecionar_imagem(memory: ImageMemory):
     """
     Abre uma janela para o usuário selecionar uma imagem do computador.
 

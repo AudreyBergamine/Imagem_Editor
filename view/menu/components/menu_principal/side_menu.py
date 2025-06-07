@@ -184,15 +184,11 @@ class Side_menu(RoundedFrame):
                 self.inner_frame,
                 image_path="view/static/images/engrenagem.png",
                 text=nome,
-                command=callback,
+                command=callback(self.master.app.memory),
                 background_color="#555",
                 text_color="white"
             )
             btn.pack(side="top", fill="x", padx=5, pady=2)  # Adicione padding horizontal
-
-
-
-
 
 
         

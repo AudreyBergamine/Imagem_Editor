@@ -1,6 +1,8 @@
 import cv2
 
-def split_and_merge(imagem):
+from service.image_memory import ImageMemory
+
+def split_and_merge(memory: ImageMemory):
     """
     Realiza a separação e junção de canais de uma imagem.
     Permite realizar alterações nos canais antes de juntá-los novamente.
