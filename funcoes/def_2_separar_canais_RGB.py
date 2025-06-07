@@ -1,10 +1,12 @@
 import cv2
 
+from service.image_memory import ImageMemory
 
-def separar_canais_rgb(imagem):
+
+def separar_canais_rgb(memory: ImageMemory):
 
     # Separa os canais de cores
-    azul, verde, vermelho = cv2.split(imagem)
+    azul, verde, vermelho = cv2.split(memory.getLastEdit())
 
     # Exibe os canais separados
     cv2.imshow("Canal R", vermelho)

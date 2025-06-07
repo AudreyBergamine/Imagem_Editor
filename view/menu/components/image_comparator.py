@@ -3,10 +3,11 @@ from PIL import Image, ImageTk
 import cv2
 
 from configuration.configuration import Configuration
+from service.image_memory import ImageMemory
 from view.menu.components.RoundedFrame import RoundedFrame
 
 class ImageComparator(RoundedFrame):
-    def __init__(self, master, app, img_before=None, img_after=None):
+    def __init__(self, master, app):
         super().__init__(master,
                          bg_color=Configuration.image_comparator_background_color,
                          border_color="black",
@@ -21,16 +22,23 @@ class ImageComparator(RoundedFrame):
     def create_widgets(self):
         self.container = tk.Frame(self, background="black")
         self.container.pack(fill="both", expand=True, padx=10, pady=10)
+        
+        def voltar_edicao():
+            memory: ImageMemory = self.master.app.memory
+            memory.resetLastEdition()
+            memory.update()
+            self.update()
+        
+        self.returnButton = tk.Button(self.container, text="Voltar uma edição", command=voltar_edicao)
 
         self.container.grid_columnconfigure(0, weight=1, uniform='equal')
-        self.container.grid_columnconfigure(1, weight=1, uniform='equal')
         self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_rowconfigure(1, weight=1)
 
-        self.image_before = tk.Frame(self.container, background="black")
-        self.image_before.grid(row=0, column=0, sticky="nsew", padx=2)
+        self.returnButton.grid(row=0,column=0)
 
         self.image_after = tk.Frame(self.container, background="black")
-        self.image_after.grid(row=0, column=1, sticky="nsew", padx=2)
+        self.image_after.grid(row=1, column=0, sticky="nsew", padx=2)
 
     def show_image(self, frame, image_cv2):
         if image_cv2 is None:
@@ -65,5 +73,7 @@ class ImageComparator(RoundedFrame):
         frame.after(100, update_image)
 
     def display_images(self):
-        self.show_image(self.image_before, self.master.app.memory.image_backEdited)
-        self.show_image(self.image_after, self.master.app.memory.image_selected)
+        memory: ImageMemory = self.master.app.memory
+        memory.update()
+        # self.show_image(self.image_before, memory.image_backEdited)
+        self.show_image(self.image_after, memory.image_selected)

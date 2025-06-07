@@ -4,7 +4,7 @@ from tkinter.filedialog import askopenfilename
 
 from service.image_memory import ImageMemory
 
-def selecionar_imagem(memory: ImageMemory):
+def selecionar_imagem():
     """
     Abre uma janela para o usuário selecionar uma imagem do computador.
 

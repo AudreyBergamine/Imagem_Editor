@@ -10,7 +10,7 @@ def split_and_merge(memory: ImageMemory):
     :param imagem: Caminho da imagem a ser processada.
     """
     # Converte para o espaço de cores HSV
-    imagem_hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)
+    imagem_hsv = cv2.cvtColor(memory.getLastEdit(), cv2.COLOR_BGR2HSV)
     cv2.imshow("Imagem HSV", imagem_hsv)
 
     # Realiza separação de canais HSV

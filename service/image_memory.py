@@ -23,6 +23,8 @@ class ImageMemory:
         
         self.image_nextEdited = self.image_selected
         self.index_nextEdited = self.index_selected
+        
+        self.update()
     
     def moveNext(self):
         if self.index_nextEdited == self.index_selected:
