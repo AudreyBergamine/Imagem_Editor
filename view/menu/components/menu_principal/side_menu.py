@@ -133,6 +133,16 @@ class Side_menu(RoundedFrame):
             text_color="white"
         )
         btn_convert_HSV_to_RGB_4.pack(side="top", fill="x", padx=5, pady=2)
+      
+        btn_espaco_cores_Y = IconButton(
+            self.inner_frame,
+            image_path="view/static/images/engrenagem.png",
+            text="HSV para RGB",
+            command=lambda: self._executar_funcao(),
+            background_color="#555",
+            text_color="white"
+        )
+        btn_espaco_cores_Y.pack(side="top", fill="x", padx=5, pady=2)
 
         # Botão: Tons de Cinza
         btn_cinza_7 = IconButton(
