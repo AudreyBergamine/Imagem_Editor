@@ -1,7 +1,11 @@
 import cv2
+from service.image_memory import ImageMemory
 
-def redimensionar_imagem(imagem, escala):
-    
+def redimensionar_imagem(memory: ImageMemory, escala):
+    """ Redimensiona a imagem de acordo com a escala fornecida."""
+
+    imagem = memory.getLastEdit()
+
     # Obtém as dimensões originais da imagem
     largura = int(imagem.shape[1] * escala)
     altura = int(imagem.shape[0] * escala)
