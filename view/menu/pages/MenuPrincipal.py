@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from service.image_memory import ImageMemory
 from view.menu.components.image_comparator import ImageComparator
 from view.menu.components.menu_principal.side_menu import Side_menu
 from view.menu.components.menu_principal.tools_bar import ToolsBar
@@ -29,5 +30,14 @@ class MenuPrincipal(tk.Frame):
         image_comparator = ImageComparator(master=self,app= self.app)
         image_comparator.pack(fill="both", expand=True)
     
+        def voltar_edicao():
+            memory: ImageMemory = self.app.memory
+            memory.resetLastEdition()
+            self.app.trocar_tela('menu_principal')
+        
+        buttonReet = tk.Button(toolsBar, text="Voltar edição", command=voltar_edicao)
+        buttonReet.pack(fill="none", expand=False)
+        
+        
     def __str__(self):
         return "Menu Principal"

@@ -13,7 +13,8 @@ class ImageQueue:
             self.images.pop(0)
     
     def back(self):
-        self.images.pop()
+        if len(self.images) > 1:
+            self.images.pop()
     
     def restore(self, index):
         while len(self.images) > index+1:

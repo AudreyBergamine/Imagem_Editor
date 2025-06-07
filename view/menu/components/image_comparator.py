@@ -23,22 +23,12 @@ class ImageComparator(RoundedFrame):
         self.container = tk.Frame(self, background="black")
         self.container.pack(fill="both", expand=True, padx=10, pady=10)
         
-        def voltar_edicao():
-            memory: ImageMemory = self.master.app.memory
-            memory.resetLastEdition()
-            memory.update()
-            self.update()
-        
-        self.returnButton = tk.Button(self.container, text="Voltar uma edição", command=voltar_edicao)
-
-        self.container.grid_columnconfigure(0, weight=1, uniform='equal')
+    
+        self.container.grid_columnconfigure(0, weight=1)
         self.container.grid_rowconfigure(0, weight=1)
-        self.container.grid_rowconfigure(1, weight=1)
-
-        self.returnButton.grid(row=0,column=0)
 
         self.image_after = tk.Frame(self.container, background="black")
-        self.image_after.grid(row=1, column=0, sticky="nsew", padx=2)
+        self.image_after.grid(row=0, column=0, sticky="nsew", padx=2)
 
     def show_image(self, frame, image_cv2):
         if image_cv2 is None:
