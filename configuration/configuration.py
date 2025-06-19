@@ -1,5 +1,3 @@
-
-
 class Configuration:
     # Window config
     window_width = 1200
@@ -19,6 +17,6 @@ class Configuration:
     image_comparator_background_color = menu_principal_background_color
 
     # Side menu config
-    side_menu_width = 200
+    side_menu_width = 320
     side_menu_height = 300
     side_background_color = menu_principal_background_color

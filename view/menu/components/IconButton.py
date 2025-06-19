@@ -19,6 +19,15 @@ class IconButton(tk.Button):
         
         super().__init__(master, image=self.image, command=self.command, borderwidth=0, text=text, compound="top")
         
-        self.config(compound="left", padx=5, pady=5, bg=self.background_color, foreground=self.text_color, font=("Arial", 10))
+        # Alinhar texto à esquerda e mudar cor para verde
+        self.config(
+            compound="left", # Ícone à esquerda do texto
+            padx=10, pady=5,
+            bg="#ACC33D", # Verde rgb(172,195,61)
+            foreground="#222", # Cinza escuro
+            font=("Arial", 10),
+            anchor="w", # Alinha o texto à esquerda
+            justify="left"
+        )
         
         # TODO: Fazer função que verifique se os caracteres do texto ultrapassam o limite do master

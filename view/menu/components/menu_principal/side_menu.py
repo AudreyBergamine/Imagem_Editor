@@ -90,23 +90,23 @@ class Side_menu(RoundedFrame):
     def create_widgets(self):
         largura_menu = max(Configuration.side_menu_width, 200)
 
-        scrollbar = tk.Scrollbar(self, orient="vertical", command=self.yview)
-        self.configure(yscrollcommand=scrollbar.set)
+        # Canvas para rolagem
+        canvas = tk.Canvas(self, bg=Configuration.side_background_color, width=largura_menu, highlightthickness=0)
+        scrollbar = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
+        canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
+        canvas.pack(side="left", fill="both", expand=True)
 
-        self.inner_frame = tk.Frame(self, bg=Configuration.side_background_color)
-        self.window_id = self.create_window((0, 0), window=self.inner_frame, anchor="nw", width=largura_menu)
-
-        def on_configure(event):
-            self.configure(scrollregion=self.bbox("all"))
-            self.itemconfig(self.window_id, width=self.winfo_width())
-
-        self.inner_frame.bind("<Configure>", on_configure)
+        self.inner_frame = tk.Frame(canvas, bg=Configuration.side_background_color)
+        self.inner_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        window_id = canvas.create_window((0, 0), window=self.inner_frame, anchor="nw", width=largura_menu)
 
         def _on_mousewheel(event):
-            self.yview_scroll(int(-1 * (event.delta / 120)), "units")
-
-        self.bind_all("<MouseWheel>", _on_mousewheel)
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        canvas.bind_all("<MouseWheel>", _on_mousewheel)
 
         # Botões dinâmicos para cada função
         for idx, (nome, modulo, funcao) in enumerate(FUNCOES, 1):
@@ -122,10 +122,14 @@ class Side_menu(RoundedFrame):
                 image_path="view/static/images/engrenagem.png",
                 text=f"{idx:02d} - {nome}",
                 command=make_callback(func),
-                background_color="#555",
                 text_color="white"
             )
             btn.pack(side="top", fill="x", padx=5, pady=2)
+
+        # Ajustar largura do frame interno ao canvas
+        def resize_inner(event):
+            canvas.itemconfig(window_id, width=event.width)
+        canvas.bind("<Configure>", resize_inner)
 
     def _executar_funcao(self, func):
         # Corrigir acesso ao app
