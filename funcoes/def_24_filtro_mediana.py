@@ -3,31 +3,25 @@ import numpy as np
 from service.image_memory import ImageMemory
 
 # Função para aplicar o filtro mediana 
-def filtro_mediana(memory: ImageMemory):
-    """ Aplica um filtro de mediana a uma imagem. Este filtro substitui cada pixel pelo valor mediano dos pixels vizinhos. """
-    
+def filtro_mediana(memory: ImageMemory, tamanho_janela: int = 3):
+    """
+    Aplica um filtro de mediana a uma imagem usando OpenCV.
+    :param memory: Instância de ImageMemory.
+    :param tamanho_janela: Tamanho da janela do filtro (deve ser ímpar e >= 3).
+    """
     imagem = memory.getLastEdit()
-    
-    # Obter dimensões da imagem
-    linhas, colunas = imagem.shape[:2]
-    # Criar uma cópia da imagem para armazenar a imagem filtrada
-    imagem_filtrada = np.zeros_like(imagem)
 
-    # Percorrer cada pixel da imagem (ignorando as bordas)
-    for x in range(1, linhas - 1):
-        for y in range(1, colunas - 1):
-            # Criar um vetor para armazenar os valores da vizinhança 3x3
-            vetor = []
-            for i in range(-1, 2):
-                for j in range(-1, 2):
-                    vetor.append(imagem[x + i, y + j])
+    # Verificações de segurança
+    if imagem is None:
+        raise ValueError("Nenhuma imagem carregada na memória.")
+    if tamanho_janela < 3 or tamanho_janela % 2 == 0:
+        raise ValueError("O tamanho da janela deve ser um número ímpar maior ou igual a 3.")
+    if imagem.dtype not in [np.uint8, np.uint16]:
+        imagem = imagem.astype(np.uint8)
+    if min(imagem.shape[0], imagem.shape[1]) < tamanho_janela:
+        raise ValueError("A imagem é muito pequena para o tamanho da janela escolhido.")
 
-            # Ordenar o vetor
-            vetor.sort()
-            
-            # Atribuir o valor mediano ao pixel central
-            imagem_filtrada[x, y] = vetor[4]  # Posição central do vetor ordenado
-    
+    imagem_filtrada = cv2.medianBlur(imagem, tamanho_janela)
     memory.addEdit(imagem_filtrada)
 
 """
