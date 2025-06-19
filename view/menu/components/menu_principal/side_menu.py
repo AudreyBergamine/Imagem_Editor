@@ -1,5 +1,6 @@
 import tkinter as tk
 from functools import partial
+import importlib
 
 from funcoes import def_0_abrir_imagem
 from funcoes.def_1_split_and_merge import split_and_merge
@@ -13,6 +14,54 @@ from view.menu.components.IconButton import IconButton
 from configuration.configuration import Configuration
 from view.menu.components.RoundedFrame import RoundedFrame
 
+# Lista de funções e nomes amigáveis (até def_42)
+FUNCOES = [
+    ("Abrir Imagem", "def_0_abrir_imagem", "selecionar_imagem"),
+    ("Split and Merge", "def_1_split_and_merge", "split_and_merge"),
+    ("Separar Canais R", "def_2_separar_canais_RGB", "separar_canal_R"),
+    ("Separar Canais G", "def_2_separar_canais_RGB", "separar_canal_G"),
+    ("Separar Canais B", "def_2_separar_canais_RGB", "separar_canal_B"),
+    ("RGB para HSV", "def_3_convert_RGB_to_HSV", "convert_RGB_to_HSV"),
+    ("HSV para RGB", "def_4_convert_HSV_to_RGB", "convert_HSV_to_RGB"),
+    ("Espaço de Cores YCrCb", "def_5_espaco_de_cores_YCrCb", "espaco_de_cores_YCrCb"),
+    ("Espaço de Cor LAB", "def_6_espaco_de_cor_LAB", "espaco_de_cor_LAB"),
+    ("Tons de Cinza", "def_7_convertendo_em_tons_de_cinza", "convertendo_em_tons_de_cinza"),
+    ("Converter Modelos de Cor", "def_8_converter_modelos_cor", "converter_modelos_cor"),
+    ("Propriedades da Imagem", "def_9_propriedades_da_imagem", "propriedades_da_imagem"),
+    ("Pegar Cor de um Pixel", "def_10_pegar_cor_de_um_pixel", "pegar_cor_de_um_pixel"),
+    ("Modificar Cor de um Pixel", "def_11_modificar_cor_de_um_pixel", "modificar_cor_de_um_pixel"),
+    ("Região de Interesse", "def_12_regiao_de_interesse", "regiao_de_interesse"),
+    ("Redimensionar Imagem", "def_13_redimensionar_imagem", "redimensionar_imagem"),
+    ("Ajuste de Brilho", "def_14_ajuste_de_brilho", "ajuste_de_brilho"),
+    ("Ajuste de Contraste", "def_15_ajuste_de_contraste", "ajuste_de_contraste"),
+    ("Inverter Cores", "def_16_inverter_cores", "inverter_cores"),
+    ("Negativo da Imagem", "def_17_negativo_da_imagem", "negativo_da_imagem"),
+    ("Adicionar Imagens", "def_18_adicionar_imagens", "adicionar_imagens"),
+    ("Subtrair Imagens", "def_19_subtrair_imagens", "subtrair_imagens"),
+    ("Multiplicar Imagens", "def_20_multiplicar_imagens", "multiplicar_imagens"),
+    ("Dividir Imagens", "def_21_dividir_imagens", "dividir_imagens"),
+    ("Média de Duas Imagens", "def_22_media_de_duas_imagens", "media_de_duas_imagens"),
+    ("Filtro Média", "def_23_filtro_media", "filtro_media"),
+    ("Filtro Mediana", "def_24_filtro_mediana", "filtro_mediana"),
+    ("Suavizar Imagem", "def_25_suavizar_imagem", "suavizar_imagem"),
+    ("Realçar Imagem", "def_26_realcar_imagem", "realcar_imagem"),
+    ("Calcular Histograma", "def_27_calcular_histograma", "calcular_histograma"),
+    ("Histograma Colorido", "def_28_calcular_histograma_colorido", "calcular_histograma_colorido"),
+    ("Binarizar Imagem", "def_29_binarizar_imagem", "binarizar_imagem"),
+    ("Equalizar Histograma", "def_30_equalizar_histograma", "equalizar_histograma"),
+    ("Quantizar Histograma", "def_31_quantizar_histograma", "quantizar_histograma"),
+    ("Split Histograma", "def_32_split_histograma", "split_histograma"),
+    ("Stretching Histograma", "def_33_stretching_histograma", "stretching_histograma"),
+    ("Erosão", "def_34_erosao", "erosao"),
+    ("Dilatação", "def_35_dilatacao", "dilatacao"),
+    ("Abertura", "def_36_abertura", "abertura"),
+    ("Fechamento", "def_37_fechamento", "fechamento"),
+    ("Abertura/Fechamento Tons de Cinza", "def_38_abertura_fechamento_tons_cinza", "abertura_fechamento_tons_cinza"),
+    ("Gradiente Morfológico", "def_39_gradiente_morfologico", "gradiente_morfologico"),
+    ("Top Hat", "def_40_top_hat", "top_hat"),
+    ("Eliminação de Ruídos", "def_41_eliminacao_ruidos", "eliminacao_ruidos"),
+    ("Detectar Rostos", "def_42_detectar_rostos", "detectar_rostos"),
+]
 
 class Side_menu(RoundedFrame):
     def __init__(self, master):
@@ -29,7 +78,14 @@ class Side_menu(RoundedFrame):
         self.create_widgets()
         
     def update(self):
-        self.master.app.trocar_tela('menu_principal')
+        # Corrigir acesso ao app
+        app = getattr(self.master, 'app', None)
+        if app is None:
+            app = getattr(self.master.master, 'app', None)
+        if app is None:
+            print("Erro: não foi possível acessar o app.")
+            return
+        app.trocar_tela('menu_principal')
 
     def create_widgets(self):
         largura_menu = max(Configuration.side_menu_width, 200)
@@ -52,114 +108,35 @@ class Side_menu(RoundedFrame):
 
         self.bind_all("<MouseWheel>", _on_mousewheel)
 
-        # Botão: Abrir Imagem
-        def abrir_imagem_callback(memory: ImageMemory):
-            image = def_0_abrir_imagem.selecionar_imagem()
-            memory.addImage(image)
-            memory.update()
-            self.update()
+        # Botões dinâmicos para cada função
+        for idx, (nome, modulo, funcao) in enumerate(FUNCOES, 1):
+            try:
+                mod = importlib.import_module(f"funcoes.{modulo}")
+                func = getattr(mod, funcao)
+            except Exception as e:
+                func = None
+            def make_callback(f):
+                return lambda: self._executar_funcao(f) if f else None
+            btn = IconButton(
+                self.inner_frame,
+                image_path="view/static/images/engrenagem.png",
+                text=f"{idx:02d} - {nome}",
+                command=make_callback(func),
+                background_color="#555",
+                text_color="white"
+            )
+            btn.pack(side="top", fill="x", padx=5, pady=2)
 
-        btn_abrir_0 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Abrir Imagem",
-            command=lambda: abrir_imagem_callback(self.master.app.memory),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_abrir_0.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Split and Merge
-        btn_split_merge_1 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Split and Merge",
-            command=lambda: self._executar_funcao(split_and_merge),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_split_merge_1.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Separar Canal R
-        btn_canal_r_2_1 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Separar Canais R",
-            command=lambda: self._executar_funcao(def_2_separar_canais_RGB.separar_canal_R),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_canal_r_2_1.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Separar Canal G
-        btn_canal_g_2_2 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Separar Canais G",
-            command=lambda: self._executar_funcao(def_2_separar_canais_RGB.separar_canal_G),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_canal_g_2_2.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Separar Canal B
-        btn_canal_b_2_3 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Separar Canais B",
-            command=lambda: self._executar_funcao(def_2_separar_canais_RGB.separar_canal_B),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_canal_b_2_3.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Tons de Cinza
-        btn_convert_RGB_to_HSV_3 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="RGB para HSV",
-            command=lambda: self._executar_funcao(convert_RGB_to_HSV),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_convert_RGB_to_HSV_3.pack(side="top", fill="x", padx=5, pady=2)
-       
-        btn_convert_HSV_to_RGB_4 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="HSV para RGB",
-            command=lambda: self._executar_funcao(convert_HSV_to_RGB),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_convert_HSV_to_RGB_4.pack(side="top", fill="x", padx=5, pady=2)
-      
-        btn_espaco_cores_Y = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="HSV para RGB",
-            command=lambda: self._executar_funcao(),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_espaco_cores_Y.pack(side="top", fill="x", padx=5, pady=2)
-
-        # Botão: Tons de Cinza
-        btn_cinza_7 = IconButton(
-            self.inner_frame,
-            image_path="view/static/images/engrenagem.png",
-            text="Tons de Cinza",
-            command=lambda: self._executar_funcao(convertendo_em_tons_de_cinza),
-            background_color="#555",
-            text_color="white"
-        )
-        btn_cinza_7.pack(side="top", fill="x", padx=5, pady=2)
-
-        
-        
     def _executar_funcao(self, func):
-        func(self.master.app.memory)
-        self.master.app.trocar_tela('menu_principal')
+        # Corrigir acesso ao app
+        app = getattr(self.master, 'app', None)
+        if app is None:
+            app = getattr(self.master.master, 'app', None)
+        if app is None:
+            print("Erro: não foi possível acessar o app.")
+            return
+        func(app.memory)
+        app.trocar_tela('menu_principal')
 
     def show_menu_principal(self):
         pass

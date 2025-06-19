@@ -14,8 +14,9 @@ class App(tk.Tk):
         self.imagem_original = None
                 
         self.title("Imagem Editor")
-        largura_tela = Configuration.window_width
-        altura_tela = Configuration.window_height
+        # Ajusta a janela para ocupar 100% da tela
+        largura_tela = self.winfo_screenwidth()
+        altura_tela = self.winfo_screenheight()
         self.geometry(f"{largura_tela}x{altura_tela}+0+0")
         
         self.container = main_container(self, self.trocar_tela)
@@ -49,4 +50,6 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     app = App()
+    import tkinter.messagebox as messagebox
+    app.after(100, lambda: messagebox.showinfo("Bem-vindo!", "Selecione uma imagem para começar!\nVá em Arquivo -> Carregar imagem"))
     app.mainloop() 
