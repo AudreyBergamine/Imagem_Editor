@@ -127,7 +127,7 @@ class Side_menu(RoundedFrame):
             btn.pack(side="top", fill="x", padx=5, pady=2)
 
         # Espaço extra no final para garantir rolagem completa
-        spacer = tk.Frame(self.inner_frame, height=60, bg=Configuration.side_background_color)
+        spacer = tk.Frame(self.inner_frame, height=110, bg=Configuration.side_background_color)
         spacer.pack(side="top", fill="x")
 
         # Ajustar largura do frame interno ao canvas
@@ -143,7 +143,14 @@ class Side_menu(RoundedFrame):
         if app is None:
             print("Erro: não foi possível acessar o app.")
             return
-        func(app.memory)
+        # Chamar selecionar_imagem sem argumentos, as demais com app.memory
+        if func.__name__ == 'selecionar_imagem':
+            imagem = func()
+            if imagem is not None:
+                app.memory.addImage(imagem)
+                app.memory.update()
+        else:
+            func(app.memory)
         app.trocar_tela('menu_principal')
 
     def show_menu_principal(self):
