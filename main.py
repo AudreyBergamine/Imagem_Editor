@@ -53,7 +53,7 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     app = App()
-    caminho_imagem_teste = os.path.join("view", "static", "images", "praia.jpg")
+    caminho_imagem_teste = os.path.join("view", "static", "images", "ImageInicialPraia.jpg")
     imagem_carregada = False
     if os.path.exists(caminho_imagem_teste):
         imagem_teste = cv2.imread(caminho_imagem_teste)
@@ -67,6 +67,4 @@ if __name__ == "__main__":
         app.memory.addImage(imagem_fallback)
         app.memory.update()
     app.trocar_tela("menu_principal")
-    import tkinter.messagebox as messagebox
-    app.after(100, lambda: messagebox.showinfo("Bem-vindo!", "Selecione uma imagem para começar!\n"))
     app.mainloop() 

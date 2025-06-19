@@ -35,8 +35,23 @@ class MenuPrincipal(tk.Frame):
             memory.resetLastEdition()
             self.app.trocar_tela('menu_principal')
         
-        buttonReet = tk.Button(toolsBar, text="Voltar edição", command=voltar_edicao)
-        buttonReet.pack(fill="none", expand=False)
+        buttonReet = tk.Button(
+            toolsBar,
+            text="⟵ Voltar Edição",
+            command=voltar_edicao,
+            bg="#ACC33D",
+            fg="white",
+            font=("Arial", 11, "bold"),
+            relief="flat",
+            activebackground="#9EB82F",
+            activeforeground="white",
+            borderwidth=0,
+            highlightthickness=0,
+            padx=18,
+            pady=8,
+            cursor="hand2"
+        )
+        buttonReet.pack(side="left", anchor="w", padx=10, pady=8)
         
         
     def __str__(self):
