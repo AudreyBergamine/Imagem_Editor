@@ -1,26 +1,27 @@
 import cv2
 from service.image_memory import ImageMemory
-from .def_0_abrir_imagem import abrir_imagem, selecionar_imagem
+from tkinter import messagebox
+import numpy as np
 
-# Função para dividir duas imagens pixel a pixel
 def dividir_imagens(memory: ImageMemory):
-    """ Divide duas imagens pixel a pixel e retorna a imagem resultante. """
-    
-    imagem = memory.getLastEdit()
-    
-# Abrir as duas imagens
-    imagem2 = selecionar_imagem()
-    # Certifique-se de que as imagens têm o mesmo tamanho
-    if imagem.shape != imagem2.shape:
-        raise ValueError("As imagens devem ter o mesmo tamanho para divisão.")
-    
-    # Evitar divisão por zero adicionando um pequeno valor ao denominador
-    imagem2 = imagem2.astype(float) + 1e-10
-    
-    # Realizar a divisão pixel a pixel
-    imagem_resultante = cv2.divide(imagem.astype(float), imagem2)
+    """
+    Divide pixel a pixel a última imagem adicionada na fila por ela mesma.
+    O resultado é normalizado para o intervalo [0, 255].
+    """
+    if len(memory.fila.images) < 1:
+        messagebox.showinfo("Atenção", "É necessário adicionar pelo menos 1 imagem para dividir por ela mesma.")
+        return
 
-    # Converter de volta para o tipo original
-    imagem_resultante = cv2.convertScaleAbs(imagem_resultante)
+    imagem = memory.fila.images[-1]
+
+    # Evitar divisão por zero
+    imagem_float = imagem.astype(np.float32)
+    imagem_float[imagem_float == 0] = 1e-10
+
+    resultado_float = imagem.astype(np.float32) / imagem_float
+    dst = np.empty_like(resultado_float)
+    resultado_norm = cv2.normalize(resultado_float, dst, 0, 255, cv2.NORM_MINMAX)
+    imagem_resultante = resultado_norm.astype(np.uint8)
 
     memory.addEdit(imagem_resultante)
+    return imagem_resultante
