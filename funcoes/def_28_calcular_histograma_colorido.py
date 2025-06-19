@@ -1,5 +1,7 @@
 import cv2
 from service.image_memory import ImageMemory
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 
@@ -7,25 +9,19 @@ def calcular_histograma_colorido(memory: ImageMemory):
     """ Calcula o histograma de uma imagem colorida e retorna os vetores de histograma para os canais R, G e B. """
     imagem = memory.getLastEdit()
 
-    # Inicializar os vetores HR, HG e HB com zeros
-    HR = [0] * 256
-    HG = [0] * 256
-    HB = [0] * 256
+    # Verifica se a imagem é colorida
+    if len(imagem.shape) != 3 or imagem.shape[2] != 3:
+        raise ValueError("A imagem fornecida não é colorida (esperado 3 canais).")
 
-    # Obter as dimensões da imagem
-    quantidade_de_linhas, quantidade_de_colunas, _ = imagem.shape
+    # Calcula o histograma para cada canal (B, G, R)
+    HB = cv2.calcHist([imagem], [0], None, [256], [0, 256]).flatten()
+    HG = cv2.calcHist([imagem], [1], None, [256], [0, 256]).flatten()
+    HR = cv2.calcHist([imagem], [2], None, [256], [0, 256]).flatten()
 
-    # Percorrer cada pixel da imagem
-    for x in range(quantidade_de_linhas):
-        for y in range(quantidade_de_colunas):
-            
-            # Obter os valores dos canais R, G e B
-            B, G, R = imagem[x, y]
-
-            # Atualizar os vetores de histograma
-            HR[R] += 1
-            HG[G] += 1
-            HB[B] += 1
+    # Converte para inteiros
+    HR = HR.astype(int).tolist()
+    HG = HG.astype(int).tolist()
+    HB = HB.astype(int).tolist()
 
     return HR, HG, HB
   
