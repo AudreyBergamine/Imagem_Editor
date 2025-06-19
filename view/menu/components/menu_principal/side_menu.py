@@ -126,6 +126,10 @@ class Side_menu(RoundedFrame):
             )
             btn.pack(side="top", fill="x", padx=5, pady=2)
 
+        # Espaço extra no final para garantir rolagem completa
+        spacer = tk.Frame(self.inner_frame, height=60, bg=Configuration.side_background_color)
+        spacer.pack(side="top", fill="x")
+
         # Ajustar largura do frame interno ao canvas
         def resize_inner(event):
             canvas.itemconfig(window_id, width=event.width)
