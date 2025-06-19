@@ -10,4 +10,5 @@ def espaco_de_cores_YCrCb(memory: ImageMemory):
     # Extrair os canais Y, Cr e Cb
     canal_Y, canal_Cr, canal_Cb = cv2.split(imagemYCrCb)
     
+    memory.addEdit(imagemYCrCb)
     return imagemYCrCb, canal_Y, canal_Cr, canal_Cb
