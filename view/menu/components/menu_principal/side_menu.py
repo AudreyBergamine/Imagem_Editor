@@ -64,6 +64,8 @@ FUNCOES = [
 ]
 
 class Side_menu(RoundedFrame):
+    _last_scroll = 0  # Agora é atributo de classe, persiste entre instâncias
+
     def __init__(self, master):
         super().__init__(master,
                          bg_color=Configuration.side_background_color,
@@ -75,6 +77,7 @@ class Side_menu(RoundedFrame):
 
         self.master = master
         self.pack_propagate(False)
+        self._canvas = None    # Para guardar referência ao canvas
         self.create_widgets()
         
     def update(self):
@@ -92,6 +95,7 @@ class Side_menu(RoundedFrame):
 
         # Canvas para rolagem
         canvas = tk.Canvas(self, bg=Configuration.side_background_color, width=largura_menu, highlightthickness=0)
+        self._canvas = canvas  # Salva referência ao canvas
         scrollbar = tk.Scrollbar(self, orient="vertical", command=canvas.yview)
         canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
@@ -135,6 +139,23 @@ class Side_menu(RoundedFrame):
             canvas.itemconfig(window_id, width=event.width)
         canvas.bind("<Configure>", resize_inner)
 
+        self.restore_scroll_position()
+
+    def save_scroll_position(self):
+        if self._canvas:
+            Side_menu._last_scroll = self._canvas.yview()[0]
+
+    def restore_scroll_position(self):
+        if self._canvas is not None:
+            def try_scroll():
+                if self._canvas is not None:
+                    try:
+                        self._canvas.yview_moveto(Side_menu._last_scroll)
+                    except Exception:
+                        pass  # Ignora se não conseguir rolar (ex: ainda não pronto)
+            if self._canvas is not None:
+                self._canvas.after(50, try_scroll)
+
     def _executar_funcao(self, func):
         # Corrigir acesso ao app
         app = getattr(self.master, 'app', None)
@@ -143,6 +164,9 @@ class Side_menu(RoundedFrame):
         if app is None:
             print("Erro: não foi possível acessar o app.")
             return
+
+        self.save_scroll_position()  # Salva a posição antes de atualizar
+
         # Chamar selecionar_imagem sem argumentos, as demais com app.memory
         if func.__name__ == 'selecionar_imagem':
             imagem = func()
@@ -152,6 +176,8 @@ class Side_menu(RoundedFrame):
         else:
             func(app.memory)
         app.trocar_tela('menu_principal')
+
+        self.restore_scroll_position()  # Restaura a posição após atualizar
 
     def show_menu_principal(self):
         pass
