@@ -10,12 +10,15 @@ def media_de_duas_imagens(memory: ImageMemory):
     
     imagem = memory.getLastEdit()
     
-    # Abrir as duas imagens
+    # Abrir a segunda imagem
     imagem2 = selecionar_imagem()
+    # Verifica se as imagens foram carregadas corretamente
+    if imagem is None or imagem2 is None:
+        raise ValueError("Não foi possível carregar uma ou ambas as imagens.")
     # Certifique-se de que as imagens têm o mesmo tamanho
     if imagem.shape != imagem2.shape:
         raise ValueError("As imagens devem ter o mesmo tamanho para média.")
-    # Calcular a média pixel a pixel
-    imagem_resultante = cv2.addWeighted(imagem, 0.5, imagem2, 0.5, 0)
-
+    # Calcular a média pixel a pixel de forma segura
+    import numpy as np
+    imagem_resultante = ((imagem.astype('float32') + imagem2.astype('float32')) / 2).astype(imagem.dtype)
     memory.addEdit(imagem_resultante)

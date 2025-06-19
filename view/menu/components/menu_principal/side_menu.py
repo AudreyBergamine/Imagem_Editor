@@ -1,6 +1,7 @@
 import tkinter as tk
 from functools import partial
 import importlib
+from tkinter import messagebox
 
 from funcoes import def_0_abrir_imagem
 from funcoes.def_1_split_and_merge import split_and_merge
@@ -167,17 +168,20 @@ class Side_menu(RoundedFrame):
 
         self.save_scroll_position()  # Salva a posição antes de atualizar
 
-        # Chamar selecionar_imagem sem argumentos, as demais com app.memory
-        if func.__name__ == 'selecionar_imagem':
-            imagem = func()
-            if imagem is not None:
-                app.memory.addImage(imagem)
-                app.memory.update()
-        else:
-            func(app.memory)
-        app.trocar_tela('menu_principal')
-
-        self.restore_scroll_position()  # Restaura a posição após atualizar
+        try:
+            # Chamar selecionar_imagem sem argumentos, as demais com app.memory
+            if func.__name__ == 'selecionar_imagem':
+                imagem = func()
+                if imagem is not None:
+                    app.memory.addImage(imagem)
+                    app.memory.update()
+            else:
+                func(app.memory)
+            app.trocar_tela('menu_principal')
+        except Exception as e:
+            messagebox.showerror("Erro ao executar função", str(e))
+        finally:
+            self.restore_scroll_position()  # Restaura a posição após atualizar
 
     def show_menu_principal(self):
         pass
