@@ -14,16 +14,15 @@ class ImageMemory:
         self.index_nextEdited = 0
 
     def addEdit(self, image):
+        if self.index_selected != self.getLastIndex():
+            self.fila.restore(self.index_selected)
         self.image_backEdited = self.getLastEdit()
         self.index_backEdited = self.getLastIndex()
-        
         self.fila.add(image)
         self.image_selected = self.getLastEdit()
         self.index_lastEdited = self.getLastIndex()
-        
         self.image_nextEdited = self.image_selected
         self.index_nextEdited = self.index_selected
-        
         self.update()
     
     def moveNext(self):
@@ -36,8 +35,8 @@ class ImageMemory:
         self.image_selected = self.image_nextEdited
         self.index_selected = self.index_nextEdited
         
-        self.image_nextEdited = self.getBackImage(self.index_selected)
-        self.index_nextEdited = self.getBackIndex(self.index_nextEdited)
+        self.image_nextEdited = self.getNextImage(self.index_selected)
+        self.index_nextEdited = self.getNextIndex(self.index_selected)
     
     def moveBack(self):
         if self.index_lastEdited == self.index_selected:

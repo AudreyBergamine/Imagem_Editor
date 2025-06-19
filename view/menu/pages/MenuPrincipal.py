@@ -49,7 +49,7 @@ class MenuPrincipal(tk.Frame):
         # Borda arredondada (simples)
         canvas_btn.create_rectangle(2, 2, degrad_button_width-2, degrad_button_height-2, outline="#e67e22", width=2)
         # Texto
-        canvas_btn.create_text(degrad_button_width//2, degrad_button_height//2, text="⟵ Edição Anterior", fill="white", font=("Arial", 11, "bold"))
+        canvas_btn.create_text(degrad_button_width//2, degrad_button_height//2, text="⟵ Voltar", fill="white", font=("Arial", 11, "bold"))
         # Clique
         def on_click(event):
             voltar_edicao()
@@ -76,7 +76,7 @@ class MenuPrincipal(tk.Frame):
         # Borda arredondada (simples)
         canvas_btn_next.create_rectangle(2, 2, degrad_button_width_next-2, degrad_button_height_next-2, outline="#1e9c2c", width=2)
         # Texto
-        canvas_btn_next.create_text(degrad_button_width_next//2, degrad_button_height_next//2, text="Edição Posterior ⟶", fill="white", font=("Arial", 11, "bold"))
+        canvas_btn_next.create_text(degrad_button_width_next//2, degrad_button_height_next//2, text="Avançar ⟶", fill="white", font=("Arial", 11, "bold"))
         # Clique
         def on_click_next(event):
             edicao_posterior()
@@ -84,5 +84,36 @@ class MenuPrincipal(tk.Frame):
         canvas_btn_next.config(cursor="hand2")
         canvas_btn_next.pack(side="left", anchor="w", padx=(5, 10), pady=8)
         
+        # Botão Restaurar Original (roxo)
+        degrad_button_width_original = 180
+        degrad_button_height_original = 38
+        canvas_btn_original = tk.Canvas(toolsBar, width=degrad_button_width_original, height=degrad_button_height_original, highlightthickness=0, bd=0, relief="flat")
+        # Degradê roxo
+        for i in range(degrad_button_height_original):
+            r = int(120 + (180-120)*i/degrad_button_height_original)  # de 120 a 180
+            g = int(60 + (80-60)*i/degrad_button_height_original)    # de 60 a 80
+            b = int(180 + (255-180)*i/degrad_button_height_original) # de 180 a 255
+            color = f"#{r:02x}{g:02x}{b:02x}"
+            canvas_btn_original.create_line(0, i, degrad_button_width_original, i, fill=color)
+        # Borda arredondada (simples)
+        canvas_btn_original.create_rectangle(2, 2, degrad_button_width_original-2, degrad_button_height_original-2, outline="#7c3aed", width=2)
+        # Texto
+        canvas_btn_original.create_text(degrad_button_width_original//2, degrad_button_height_original//2, text="Restaurar Original", fill="white", font=("Arial", 11, "bold"))
+        # Clique
+        def on_click_original(event):
+            memory: ImageMemory = self.app.memory
+            if hasattr(memory.fila, 'images') and len(memory.fila.images) > 0:
+                memory.restoreImage(0)
+                self.app.trocar_tela('menu_principal')
+        canvas_btn_original.bind("<Button-1>", on_click_original)
+        canvas_btn_original.config(cursor="hand2")
+        canvas_btn_original.pack(side="left", anchor="w", padx=(10, 5), pady=8)
+
     def __str__(self):
         return "Menu Principal"
+
+    def getBackImage(self, index_selected):
+        if index_selected > 0:
+            return self.images[index_selected - 1]
+        else:
+            return self.images[0]
