@@ -15,5 +15,9 @@ def stretching_histograma(memory: ImageMemory):
 
     # Aplicar o stretching
     imagem_stretched = (imagem - min_val) * 255 / (max_val - min_val)
-
-    return imagem_stretched.astype(np.uint8)
+    imagem_stretched = imagem_stretched.astype(np.uint8)
+    
+    # Adicionar à memória
+    memory.addEdit(imagem_stretched)
+    
+    return imagem_stretched

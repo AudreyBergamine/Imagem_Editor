@@ -28,8 +28,8 @@ def abrir_imagem(imagem):
 
     :param caminho_imagem: Caminho para o arquivo da imagem.
     """
-    cv2.imshow("Imagem", imagem)
-    
+    # Removido cv2.imshow para evitar problemas de compatibilidade
+    # A imagem será exibida na interface principal do editor
     
     # Retornar uma imagem para uso posterior
     return imagem

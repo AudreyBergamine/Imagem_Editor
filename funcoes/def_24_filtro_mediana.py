@@ -2,33 +2,40 @@ import cv2
 import numpy as np
 from service.image_memory import ImageMemory
 
-# Função para aplicar o filtro mediana 
 def filtro_mediana(memory: ImageMemory):
-    """ Aplica um filtro de mediana a uma imagem. Este filtro substitui cada pixel pelo valor mediano dos pixels vizinhos. """
-    
-    imagem = memory.getLastEdit()
-    
-    # Obter dimensões da imagem
-    linhas, colunas = imagem.shape[:2]
-    # Criar uma cópia da imagem para armazenar a imagem filtrada
-    imagem_filtrada = np.zeros_like(imagem)
-
-    # Percorrer cada pixel da imagem (ignorando as bordas)
-    for x in range(1, linhas - 1):
-        for y in range(1, colunas - 1):
-            # Criar um vetor para armazenar os valores da vizinhança 3x3
-            vetor = []
-            for i in range(-1, 2):
-                for j in range(-1, 2):
-                    vetor.append(imagem[x + i, y + j])
-
-            # Ordenar o vetor
-            vetor.sort()
-            
-            # Atribuir o valor mediano ao pixel central
-            imagem_filtrada[x, y] = vetor[4]  # Posição central do vetor ordenado
-    
-    memory.addEdit(imagem_filtrada)
+    """ 
+    Aplica um filtro de mediana a uma imagem usando a função otimizada do OpenCV.
+    Este filtro substitui cada pixel pelo valor mediano dos pixels vizinhos.
+    """
+    try:
+        # Obtém a imagem atual
+        imagem = memory.getLastEdit()
+        
+        if imagem is None:
+            print("Erro: Nenhuma imagem carregada na memória")
+            return
+        
+        # Verifica se a imagem é válida
+        if imagem.size == 0:
+            print("Erro: Imagem inválida ou vazia")
+            return
+        
+        # Cria uma cópia da imagem para não modificar a original
+        imagem_filtrada = imagem.copy()
+        
+        # Aplica o filtro de mediana usando a função otimizada do OpenCV
+        # Usa kernel 3x3 para o filtro de mediana
+        kernel_size = 3
+        imagem_filtrada = cv2.medianBlur(imagem_filtrada, kernel_size)
+        
+        # Adiciona a imagem processada à memória
+        memory.addEdit(imagem_filtrada)
+        
+        print("Filtro de mediana aplicado com sucesso!")
+        
+    except Exception as e:
+        print(f"Erro ao aplicar filtro de mediana: {str(e)}")
+        print(f"Tipo do erro: {type(e).__name__}")
 
 """
 Exemplo do material da Prof Marcia: 
@@ -39,12 +46,7 @@ imgOriginal = cv2.imread("minhaimagem.jpeg", 0)
 tamanho_da_janela = 3
 # Aplicar o filtro de mediana
 imgFiltroMediana = cv2.medianBlur(imgOriginal, tamanho_da_janela)
-# Exibe a imagem original e a imagem filtrada
-cv2.imshow("Original", imgOriginal)
-cv2.imshow("Filtro_mediana", imgFiltroMediana)
 # Salvar a imagem filtrada
 cv2.imwrite('imagem_filtrada.jpg', imgFiltroMediana)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
 
 """

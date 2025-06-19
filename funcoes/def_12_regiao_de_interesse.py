@@ -10,8 +10,8 @@ def regiao_de_interesse(memory: ImageMemory):
     ROI = imagem[0:30, 20:50]
     memory.addEdit(ROI)
 
-    # Exibir a região de interesse
-    cv2.imshow("Região de Interesse", ROI)
+    # Removido cv2.imshow para evitar problemas de compatibilidade
+    # A região de interesse será exibida na interface principal do editor
     
     # Salvar a região de interesse em um arquivo
     cv2.imwrite("ROI1.png", ROI)

@@ -1,9 +1,7 @@
-
-
 class Configuration:
-    # Window config
-    window_width = 1200
-    window_height = 1200
+    # Window config - Agora detecta automaticamente o tamanho da tela
+    # window_width e window_height são definidos dinamicamente no main.py
+    # para preencher 100% da tela do computador
     
     limit_image_memory = 10
     icon_size = 16
@@ -19,6 +17,6 @@ class Configuration:
     image_comparator_background_color = menu_principal_background_color
 
     # Side menu config
-    side_menu_width = 200
+    side_menu_width = 350
     side_menu_height = 300
     side_background_color = menu_principal_background_color
