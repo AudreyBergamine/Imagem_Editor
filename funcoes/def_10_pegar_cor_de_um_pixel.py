@@ -1,7 +1,7 @@
 import cv2
 from service.image_memory import ImageMemory
 
-def pegar_cor_de_um_pixel(memory: ImageMemory, x, y):
+def pegar_cor_de_um_pixel(memory: ImageMemory):
     
     """
     Retorna a cor de um pixel específico na imagem.
@@ -14,7 +14,10 @@ def pegar_cor_de_um_pixel(memory: ImageMemory, x, y):
     Returns:
         Uma tupla (r, g, b) representando as cores vermelho, verde e azul.
     """
+
     imagem = memory.getLastEdit()
+
+    x, y = 0, 0    
     
     # Verifica se as coordenadas estão dentro dos limites da imagem
     if 0 <= x < imagem.shape[1] and 0 <= y < imagem.shape[0]:
