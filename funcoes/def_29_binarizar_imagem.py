@@ -1,7 +1,8 @@
 import cv2
 from service.image_memory import ImageMemory
+import numpy as np
 
-def binarizar_imagem(memory: ImageMemory, limiar):
+def binarizar_imagem(memory: ImageMemory, limiar=127):
     """
     Binariza uma imagem em tons de cinza usando um limiar.
     """
