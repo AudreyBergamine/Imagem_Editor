@@ -35,3 +35,9 @@ def modificar_cor_de_um_pixel(memory: ImageMemory, coordenadas, nova_cor, verbos
     imagem[coordenadas] = nova_cor
     
     memory.addEdit(imagem)
+
+# Modificando cor de um pixel
+# imagem[0, 0] = (255, 0, 0) 
+# imagem[5:20, 5:20] = (0, 0, 255)
+# cv2.imshow(”Imagem Processada", imagem)
+# cv2.waitKey(0)
