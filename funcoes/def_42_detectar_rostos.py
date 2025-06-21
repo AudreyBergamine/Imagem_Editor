@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 from service.image_memory import ImageMemory
 
 def detectar_rostos(memory: ImageMemory):
@@ -14,16 +15,14 @@ def detectar_rostos(memory: ImageMemory):
     imagem_cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
     
     # Carregar o classificador Haar Cascade para detecção de rostos
-    # O OpenCV já inclui classificadores pré-treinados
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    # Usar o caminho correto do diretório de dados do OpenCV
+    opencv_data_path = os.path.join(os.path.dirname(cv2.__file__), 'data')
+    cascade_path = os.path.join(opencv_data_path, 'haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier(cascade_path)
     
-    # Se não conseguir carregar o classificador, tentar caminho alternativo
+    # Verificar se o classificador foi carregado corretamente
     if face_cascade.empty():
-        # Tentar carregar do diretório de dados do OpenCV
-        import os
-        opencv_data_path = os.path.join(cv2.__file__.replace('__init__.py', ''), 'data')
-        cascade_path = os.path.join(opencv_data_path, 'haarcascade_frontalface_default.xml')
-        face_cascade = cv2.CascadeClassifier(cascade_path)
+        raise ValueError(f"Não foi possível carregar o classificador Haar Cascade em: {cascade_path}")
     
     # Detectar rostos na imagem
     rostos = face_cascade.detectMultiScale(
