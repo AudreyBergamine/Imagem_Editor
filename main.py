@@ -58,13 +58,11 @@ if __name__ == "__main__":
     if os.path.exists(caminho_imagem_teste):
         imagem_teste = cv2.imread(caminho_imagem_teste)
         if imagem_teste is not None:
-            app.memory.addImage(imagem_teste)
-            app.memory.update()
+            app.memory.setOriginalImage(imagem_teste)
             imagem_carregada = True
     # Se não carregou, adiciona uma imagem preta de fallback
     if not imagem_carregada:
         imagem_fallback = np.zeros((400, 600, 3), dtype=np.uint8)
-        app.memory.addImage(imagem_fallback)
-        app.memory.update()
+        app.memory.setOriginalImage(imagem_fallback)
     app.trocar_tela("menu_principal")
     app.mainloop() 

@@ -102,18 +102,11 @@ class MenuPrincipal(tk.Frame):
         # Clique
         def on_click_original(event):
             memory: ImageMemory = self.app.memory
-            if hasattr(memory.fila, 'images') and len(memory.fila.images) > 0:
-                memory.restoreImage(0)
-                self.app.trocar_tela('menu_principal')
+            memory.restoreOriginal()
+            self.app.trocar_tela('menu_principal')
         canvas_btn_original.bind("<Button-1>", on_click_original)
         canvas_btn_original.config(cursor="hand2")
         canvas_btn_original.pack(side="left", anchor="w", padx=(10, 5), pady=8)
 
     def __str__(self):
         return "Menu Principal"
-
-    def getBackImage(self, index_selected):
-        if index_selected > 0:
-            return self.images[index_selected - 1]
-        else:
-            return self.images[0]

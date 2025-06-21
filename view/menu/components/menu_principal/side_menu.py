@@ -173,8 +173,8 @@ class Side_menu(RoundedFrame):
             if func.__name__ == 'selecionar_imagem':
                 imagem = func()
                 if imagem is not None:
-                    app.memory.addImage(imagem)
-                    app.memory.update()
+                    # Define a nova imagem como original e limpa o histórico
+                    app.memory.setOriginalImage(imagem)
             elif func.__name__ == 'quantizar_histograma':
                 # Utiliza um valor padrão para a quantização
                 func(app.memory, 16)

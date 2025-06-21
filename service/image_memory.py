@@ -12,6 +12,9 @@ class ImageMemory:
         
         self.image_nextEdited = None
         self.index_nextEdited = 0
+        
+        # Nova propriedade para armazenar a imagem original
+        self.imagem_original = None
 
     def addEdit(self, image):
         if self.index_selected != self.getLastIndex():
@@ -84,9 +87,27 @@ class ImageMemory:
         self.update()
     
     def addImage(self, image):
+        # Se não há imagem original definida, define esta como original
+        if self.imagem_original is None:
+            self.imagem_original = image.copy()
+        
         self.fila.add(image)
         self.update()
         
     def resetLastEdition(self):
         self.fila.back()
         self.update()
+    
+    def setOriginalImage(self, image):
+        """Define uma nova imagem como original e limpa o histórico"""
+        self.imagem_original = image.copy()
+        # Limpa a fila e adiciona a nova imagem original
+        self.fila.images = [self.imagem_original]
+        self.update()
+    
+    def restoreOriginal(self):
+        """Restaura para a imagem original"""
+        if self.imagem_original is not None:
+            # Limpa a fila e adiciona apenas a imagem original
+            self.fila.images = [self.imagem_original]
+            self.update()

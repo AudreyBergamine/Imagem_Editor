@@ -34,8 +34,8 @@ class MenuBar(tk.Menu):
     def abrir_arquivo(self):
         imagem = selecionar_imagem()
         if imagem is not None:
-            self.app.imagem_original = imagem
-            self.app.memory.addImage(self.app.imagem_original)
+            # Define a nova imagem como original e limpa o histórico
+            self.app.memory.setOriginalImage(imagem)
             self.app.trocar_tela('menu_principal')
         else:
             messagebox.showinfo("Abrir", "Erro")
