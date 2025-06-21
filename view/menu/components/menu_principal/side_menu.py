@@ -175,6 +175,9 @@ class Side_menu(RoundedFrame):
                 if imagem is not None:
                     app.memory.addImage(imagem)
                     app.memory.update()
+            elif func.__name__ == 'quantizar_histograma':
+                # Utiliza um valor padrão para a quantização
+                func(app.memory, 16)
             else:
                 func(app.memory)
             app.trocar_tela('menu_principal')
