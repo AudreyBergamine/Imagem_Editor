@@ -32,7 +32,8 @@ class MenuPrincipal(tk.Frame):
     
         def voltar_edicao():
             memory: ImageMemory = self.app.memory
-            memory.resetLastEdition()
+            # memory.resetLastEdition()
+            memory.moveBack()
             self.app.trocar_tela('menu_principal')
         
         # Botão Edição Anterior com degradê

@@ -27,10 +27,10 @@ class ImageQueue:
         return len(self.images)-1
     
     def getBackImage(self, index_selected):
-        if (len(self.images) -1 < index_selected):
-            return self.images[index_selected]
+        if index_selected > 0:
+            return self.images[index_selected - 1]
         else:
-            return self.images[index_selected]
+            return self.images[0]
     
     def getBackIndex(self, index):
         index -= 1

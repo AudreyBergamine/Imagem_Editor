@@ -29,30 +29,40 @@ class ImageMemory:
         self.update()
     
     def moveNext(self):
-        if self.index_nextEdited == self.index_selected:
-            return
-        
-        self.image_backEdited = self.image_selected
-        self.index_backEdited = self.index_selected
-        
-        self.image_selected = self.image_nextEdited
-        self.index_selected = self.index_nextEdited
-        
-        self.image_nextEdited = self.getNextImage(self.index_selected)
-        self.index_nextEdited = self.getNextIndex(self.index_selected)
+        if self.index_selected < len(self.fila.images) - 1:
+            self.image_backEdited = self.image_selected
+            self.index_backEdited = self.index_selected
+
+            self.index_selected += 1
+            self.image_selected = self.fila.images[self.index_selected]
+
+            if self.index_selected < len(self.fila.images) - 1:
+                self.index_nextEdited = self.index_selected + 1
+                self.image_nextEdited = self.fila.images[self.index_nextEdited]
+            else:
+                self.index_nextEdited = self.index_selected
+                self.image_nextEdited = None
+        # Se já está na última edição, não faz nada
     
     def moveBack(self):
-        if self.index_lastEdited == self.index_selected:
-            return
-        
+        back_index = self.getBackIndex(self.index_selected)
+        if back_index == self.index_selected:
+            return  # Já está na primeira edição, não volta
+
+        # Restaurar a fila para o estado anterior
+        self.fila.restore(back_index)
+
         self.image_nextEdited = self.image_selected
         self.index_nextEdited = self.index_selected
-        
-        self.image_selected = self.image_backEdited
-        self.index_selected = self.index_backEdited
-        
-        self.image_backEdited = self.getLastEdit()
-        self.index_backEdited = self.getLastIndex()
+
+        self.index_selected = back_index
+        self.image_selected = self.fila.images[self.index_selected]  # Corrigido
+
+        self.index_backEdited = self.getBackIndex(self.index_selected)
+        if self.index_backEdited >= 0:
+            self.image_backEdited = self.fila.images[self.index_backEdited]
+        else:
+            self.image_backEdited = None
     
     def getBackImage(self, index_selected):
         return self.fila.getBackImage(index_selected)
