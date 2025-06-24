@@ -2,122 +2,72 @@ from components.image_queue import ImageQueue
 
 class ImageMemory:
     def __init__(self):
-        self.fila = ImageQueue()
-        
-        self.image_backEdited = None
-        self.index_backEdited = 0
-        
+        # Pilha de edições (undo)
+        self.undo_stack = []  # imagens já editadas
+        # Pilha de refazer (redo)
+        self.redo_stack = []  # imagens desfeitas
+
         self.image_selected = None
-        self.index_selected = 0
-        
-        self.image_nextEdited = None
-        self.index_nextEdited = 0
-        
-        # Nova propriedade para armazenar a imagem original
         self.imagem_original = None
 
     def addEdit(self, image):
-        if self.index_selected != self.getLastIndex():
-            self.fila.restore(self.index_selected)
-        self.image_backEdited = self.getLastEdit()
-        self.index_backEdited = self.getLastIndex()
-        self.fila.add(image)
-        self.image_selected = self.getLastEdit()
-        self.index_lastEdited = self.getLastIndex()
-        self.image_nextEdited = self.image_selected
-        self.index_nextEdited = self.index_selected
-        self.update()
-    
-    def moveNext(self):
-        if self.index_selected < len(self.fila.images) - 1:
-            self.image_backEdited = self.image_selected
-            self.index_backEdited = self.index_selected
-
-            self.index_selected += 1
-            self.image_selected = self.fila.images[self.index_selected]
-
-            if self.index_selected < len(self.fila.images) - 1:
-                self.index_nextEdited = self.index_selected + 1
-                self.image_nextEdited = self.fila.images[self.index_nextEdited]
-            else:
-                self.index_nextEdited = self.index_selected
-                self.image_nextEdited = None
-        # Se já está na última edição, não faz nada
-    
-    def moveBack(self):
-        back_index = self.getBackIndex(self.index_selected)
-        if back_index == self.index_selected:
-            return  # Já está na primeira edição, não volta
-
-        # Restaurar a fila para o estado anterior
-        self.fila.restore(back_index)
-
-        self.image_nextEdited = self.image_selected
-        self.index_nextEdited = self.index_selected
-
-        self.index_selected = back_index
-        self.image_selected = self.fila.images[self.index_selected]  # Corrigido
-
-        self.index_backEdited = self.getBackIndex(self.index_selected)
-        if self.index_backEdited >= 0:
-            self.image_backEdited = self.fila.images[self.index_backEdited]
+        if self.image_selected is not None:
+            self.undo_stack.append(self.image_selected)
         else:
-            self.image_backEdited = None
-    
-    def getBackImage(self, index_selected):
-        return self.fila.getBackImage(index_selected)
-    
-    def getBackIndex(self, index):
-        return self.fila.getBackIndex(index)
-        
-    def getNextImage(self, index_selected):
-        return self.fila.getNext(index_selected)
-    
-    def getNextIndex(self, index):
-        return self.fila.getNextIndex(index)
-    
-    def getLastIndex(self):
-        return self.fila.getLastIndex()
-    
-    def getLastEdit(self):
-        return self.fila.getLast()
-          
-    def update(self):
-        self.image_selected = self.getLastEdit()
-        self.index_selected = self.getLastIndex()
-        
-        self.image_backEdited = self.getBackImage(self.index_selected)
-        self.index_backEdited = self.getBackIndex(self.index_selected)
-        
-        self.image_nextEdited = self.getNextImage(self.index_selected)
-        self.index_nextEdited = self.getNextIndex(self.index_selected)
-    
-    def restoreImage(self, index):
-        self.fila.restore(index)
-        self.update()
-    
-    def addImage(self, image):
-        # Se não há imagem original definida, define esta como original
-        if self.imagem_original is None:
+            # Primeira imagem, define como original
             self.imagem_original = image.copy()
-        
-        self.fila.add(image)
-        self.update()
-        
-    def resetLastEdition(self):
-        self.fila.back()
-        self.update()
-    
-    def setOriginalImage(self, image):
-        """Define uma nova imagem como original e limpa o histórico"""
-        self.imagem_original = image.copy()
-        # Limpa a fila e adiciona a nova imagem original
-        self.fila.images = [self.imagem_original]
-        self.update()
-    
+        self.image_selected = image
+        self.redo_stack.clear()  # Nova edição limpa o redo
+
+    def moveBack(self):
+        if self.undo_stack:
+            self.redo_stack.append(self.image_selected)
+            self.image_selected = self.undo_stack.pop()
+        # Se não houver mais nada para desfazer, permanece na original
+
+    def moveNext(self):
+        if self.redo_stack:
+            self.undo_stack.append(self.image_selected)
+            self.image_selected = self.redo_stack.pop()
+        # Se não houver mais nada para refazer, permanece na última
+
     def restoreOriginal(self):
-        """Restaura para a imagem original"""
         if self.imagem_original is not None:
-            # Limpa a fila e adiciona apenas a imagem original
-            self.fila.images = [self.imagem_original]
-            self.update()
+            self.undo_stack.clear()
+            self.redo_stack.clear()
+            self.image_selected = self.imagem_original.copy()
+
+    def addImage(self, image):
+        # Compatibilidade: adiciona imagem como nova edição
+        self.addEdit(image)
+
+    def setOriginalImage(self, image):
+        self.imagem_original = image.copy()
+        self.undo_stack.clear()
+        self.redo_stack.clear()
+        self.image_selected = self.imagem_original.copy()
+
+    # Métodos auxiliares para compatibilidade
+    def getLastEdit(self):
+        return self.image_selected
+    def getLastIndex(self):
+        return len(self.undo_stack)
+    def getBackImage(self, _):
+        if self.undo_stack:
+            return self.undo_stack[-1]
+        return self.image_selected
+    def getBackIndex(self, _):
+        return len(self.undo_stack) - 1 if self.undo_stack else 0
+    def getNextImage(self, _):
+        if self.redo_stack:
+            return self.redo_stack[-1]
+        return self.image_selected
+    def getNextIndex(self, _):
+        return len(self.undo_stack) + 1 if self.redo_stack else len(self.undo_stack)
+    def update(self):
+        pass  # Não faz nada, compatibilidade
+    def restoreImage(self, index):
+        # Não implementado neste modelo
+        pass
+    def resetLastEdition(self):
+        self.moveBack()
